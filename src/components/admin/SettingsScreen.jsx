@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { 
+import {
   Palette, Shield, Globe, Puzzle, Check, Save, RotateCcw,
-  Clock, Calendar, Link, Image as ImageIcon, CreditCard, 
+  Clock, Calendar, Link, Image as ImageIcon, CreditCard,
   Bell, Database, Users, Download, Trash2, Edit, Plus, UserPlus,
   Mail, MessageSquare, MonitorPlay, Lock, EyeOff, Server,
   CalendarDays, Hash, Layout, MessageCircle, X
@@ -19,16 +19,16 @@ export function SettingsScreen() {
 
   const [domainModalOpen, setDomainModalOpen] = useState(false);
   const [emailModalOpen, setEmailModalOpen] = useState(false);
-  
+
   const [customDomain, setCustomDomain] = useState('');
   const [customDomainStatus, setCustomDomainStatus] = useState('unverified'); // unverified, verified
-  
+
   const [customEmail, setCustomEmail] = useState('');
   const [customEmailStatus, setCustomEmailStatus] = useState('unverified');
 
   const [editingUser, setEditingUser] = useState(null);
   const [inviteModalOpen, setInviteModalOpen] = useState(false);
-  
+
   const [reminders, setReminders] = useState([
     { id: '1', time: '24 Hours Before', type: 'Email', target: 'Invitee', isCustomTime: false, isEditingTemplate: false, templateContent: 'Hi {{invitee.name}},\n\nJust a reminder that you have a meeting scheduled with {{host.name}} tomorrow at {{meeting.time}}.\n\nLink: {{meeting.link}}' },
     { id: '2', time: '15 Minutes Before', type: 'WhatsApp', target: 'Both', isCustomTime: false, isEditingTemplate: false, templateContent: 'Your meeting starts in 15 minutes! Join here: {{meeting.link}}' },
@@ -138,11 +138,10 @@ export function SettingsScreen() {
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`whitespace-nowrap px-5 py-3 font-medium text-sm border-b-2 transition-colors ${
-              activeTab === tab
-                ? 'border-primary text-primary'
-                : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
-            }`}
+            className={`whitespace-nowrap px-5 py-3 font-medium text-sm border-b-2 transition-colors ${activeTab === tab
+              ? 'border-primary text-primary'
+              : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
+              }`}
           >
             {tab}
           </button>
@@ -150,17 +149,17 @@ export function SettingsScreen() {
       </div>
 
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden animate-slide-in">
-        
+
         {/* GENERAL TAB */}
         {activeTab === 'General' && (
           <div className="p-6 space-y-8">
             <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2"><Globe className="text-blue-500" /> General Settings</h3>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Default Meeting Duration</label>
                 <div className="flex gap-2">
-                  <select 
+                  <select
                     value={duration}
                     onChange={(e) => setDuration(e.target.value)}
                     className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-primary focus:border-primary sm:text-sm bg-white"
@@ -172,8 +171,8 @@ export function SettingsScreen() {
                     <option>Custom</option>
                   </select>
                   {duration === 'Custom' && (
-                    <input 
-                      type="number" 
+                    <input
+                      type="number"
                       placeholder="min"
                       value={customDuration}
                       onChange={(e) => setCustomDuration(e.target.value)}
@@ -183,7 +182,7 @@ export function SettingsScreen() {
                 </div>
                 <p className="text-xs text-slate-500 mt-1">Sets default length for new event types.</p>
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Default Buffer Time</label>
                 <select className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-primary focus:border-primary sm:text-sm bg-white">
@@ -224,10 +223,10 @@ export function SettingsScreen() {
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="flex gap-2">
-                      <select 
+                      <select
                         value={expiry}
                         onChange={(e) => setExpiry(e.target.value)}
-                        disabled={!toggles.expireLinks} 
+                        disabled={!toggles.expireLinks}
                         className="px-3 py-1.5 border border-slate-200 rounded-lg text-sm bg-white disabled:opacity-50"
                       >
                         <option>24 Hours</option>
@@ -236,8 +235,8 @@ export function SettingsScreen() {
                         <option>Custom</option>
                       </select>
                       {expiry === 'Custom' && (
-                        <input 
-                          type="number" 
+                        <input
+                          type="number"
                           placeholder="days"
                           value={customExpiry}
                           onChange={(e) => setCustomExpiry(e.target.value)}
@@ -267,7 +266,7 @@ export function SettingsScreen() {
 
               <div className="md:col-span-2 space-y-4 pt-4 border-t border-slate-100">
                 <h4 className="font-semibold text-slate-700">Meeting & Webinar Modes</h4>
-                
+
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border border-slate-100 rounded-xl bg-slate-50 gap-4">
                   <div>
                     <h4 className="font-medium text-slate-800">Webinar Mode</h4>
@@ -304,7 +303,7 @@ export function SettingsScreen() {
         {activeTab === 'Branding' && (
           <div className="p-6 space-y-8">
             <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2"><Palette className="text-pink-500" /> Branding</h3>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="space-y-6">
                 <div className="flex gap-6">
@@ -370,17 +369,17 @@ export function SettingsScreen() {
                 <div>
                   <label className="flex items-center gap-2 text-sm font-medium text-slate-700 mb-1">Custom Domain <span className="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full uppercase font-bold tracking-wider">Pro</span></label>
                   <div className="flex gap-2">
-                    <input 
-                      type="text" 
-                      placeholder="book.yourbrand.com" 
+                    <input
+                      type="text"
+                      placeholder="book.yourbrand.com"
                       value={customDomain}
                       onChange={(e) => {
                         setCustomDomain(e.target.value);
                         setCustomDomainStatus('unverified');
                       }}
-                      className="block w-full px-3 py-2 border border-slate-200 rounded-lg sm:text-sm outline-none" 
+                      className="block w-full px-3 py-2 border border-slate-200 rounded-lg sm:text-sm outline-none"
                     />
-                    <button 
+                    <button
                       onClick={() => setDomainModalOpen(true)}
                       disabled={!customDomain}
                       className="px-4 py-2 bg-slate-800 text-white rounded-lg text-sm font-medium hover:bg-slate-700 disabled:opacity-50"
@@ -389,7 +388,7 @@ export function SettingsScreen() {
                     </button>
                   </div>
                   {customDomainStatus === 'verified' ? (
-                    <p className="text-xs text-emerald-600 mt-2 flex items-center gap-1"><Check size={12}/> DNS Verified</p>
+                    <p className="text-xs text-emerald-600 mt-2 flex items-center gap-1"><Check size={12} /> DNS Verified</p>
                   ) : (
                     <p className="text-xs text-slate-500 mt-2">Map your custom booking domain.</p>
                   )}
@@ -398,17 +397,17 @@ export function SettingsScreen() {
                 <div>
                   <label className="flex items-center gap-2 text-sm font-medium text-slate-700 mb-1">Custom Email Sender Domain <span className="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full uppercase font-bold tracking-wider">Pro</span></label>
                   <div className="flex gap-2">
-                    <input 
-                      type="text" 
-                      placeholder="yourdomain.com" 
+                    <input
+                      type="text"
+                      placeholder="yourdomain.com"
                       value={customEmail}
                       onChange={(e) => {
                         setCustomEmail(e.target.value);
                         setCustomEmailStatus('unverified');
                       }}
-                      className="block w-full px-3 py-2 border border-slate-200 rounded-lg sm:text-sm outline-none" 
+                      className="block w-full px-3 py-2 border border-slate-200 rounded-lg sm:text-sm outline-none"
                     />
-                    <button 
+                    <button
                       onClick={() => setEmailModalOpen(true)}
                       disabled={!customEmail}
                       className="px-4 py-2 bg-slate-800 text-white rounded-lg text-sm font-medium hover:bg-slate-700 disabled:opacity-50"
@@ -417,7 +416,7 @@ export function SettingsScreen() {
                     </button>
                   </div>
                   {customEmailStatus === 'verified' ? (
-                    <p className="text-xs text-emerald-600 mt-2 flex items-center gap-1"><Check size={12}/> DNS Verified</p>
+                    <p className="text-xs text-emerald-600 mt-2 flex items-center gap-1"><Check size={12} /> DNS Verified</p>
                   ) : (
                     <p className="text-xs text-slate-500 mt-2">Send emails from your domain.</p>
                   )}
@@ -436,36 +435,36 @@ export function SettingsScreen() {
                 <UserPlus size={16} /> Invite Member
               </button>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-               <div className="p-4 border border-slate-200 rounded-xl">
-                 <label className="block text-sm font-medium text-slate-700 mb-1">Default Role for New Users</label>
-                 <select className="w-full px-3 py-2 border border-slate-200 rounded-lg sm:text-sm bg-white">
-                   <option>Viewer</option>
-                   <option>Editor</option>
-                   <option>Admin</option>
-                 </select>
-               </div>
-               <div className="md:col-span-2 p-4 border border-slate-200 rounded-xl overflow-x-auto scrollbar-hide">
-                 <h4 className="text-sm font-medium text-slate-700 mb-2">Team Round-Robin Order</h4>
-                 <div className="flex items-center gap-2 min-w-max">
-                   {roundRobinOrder.map((user, index) => (
-                     <div key={user.id} className={`group flex items-center px-2 py-1 rounded-full text-xs font-medium border ${index === 0 ? 'bg-indigo-50 text-primary border-indigo-100' : 'bg-slate-50 text-slate-600 border-slate-200'}`}>
-                       <button 
-                         onClick={() => moveRoundRobin(index, 'left')}
-                         disabled={index === 0}
-                         className={`px-1 mr-1 rounded ${index === 0 ? 'opacity-0' : 'hover:bg-slate-200 opacity-50 group-hover:opacity-100'}`}
-                       >&lt;</button>
-                       <span>{index + 1}. {user.name}</span>
-                       <button 
-                         onClick={() => moveRoundRobin(index, 'right')}
-                         disabled={index === roundRobinOrder.length - 1}
-                         className={`px-1 ml-1 rounded ${index === roundRobinOrder.length - 1 ? 'opacity-0' : 'hover:bg-slate-200 opacity-50 group-hover:opacity-100'}`}
-                       >&gt;</button>
-                     </div>
-                   ))}
-                 </div>
-               </div>
+              <div className="p-4 border border-slate-200 rounded-xl">
+                <label className="block text-sm font-medium text-slate-700 mb-1">Default Role for New Users</label>
+                <select className="w-full px-3 py-2 border border-slate-200 rounded-lg sm:text-sm bg-white">
+                  <option>Viewer</option>
+                  <option>Editor</option>
+                  <option>Admin</option>
+                </select>
+              </div>
+              <div className="md:col-span-2 p-4 border border-slate-200 rounded-xl overflow-x-auto scrollbar-hide">
+                <h4 className="text-sm font-medium text-slate-700 mb-2">Team Round-Robin Order</h4>
+                <div className="flex items-center gap-2 min-w-max">
+                  {roundRobinOrder.map((user, index) => (
+                    <div key={user.id} className={`group flex items-center px-2 py-1 rounded-full text-xs font-medium border ${index === 0 ? 'bg-indigo-50 text-primary border-indigo-100' : 'bg-slate-50 text-slate-600 border-slate-200'}`}>
+                      <button
+                        onClick={() => moveRoundRobin(index, 'left')}
+                        disabled={index === 0}
+                        className={`px-1 mr-1 rounded ${index === 0 ? 'opacity-0' : 'hover:bg-slate-200 opacity-50 group-hover:opacity-100'}`}
+                      >&lt;</button>
+                      <span>{index + 1}. {user.name}</span>
+                      <button
+                        onClick={() => moveRoundRobin(index, 'right')}
+                        disabled={index === roundRobinOrder.length - 1}
+                        className={`px-1 ml-1 rounded ${index === roundRobinOrder.length - 1 ? 'opacity-0' : 'hover:bg-slate-200 opacity-50 group-hover:opacity-100'}`}
+                      >&gt;</button>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
 
             <div className="border border-slate-200 rounded-xl overflow-hidden">
@@ -538,8 +537,8 @@ export function SettingsScreen() {
                           )}
                         </td>
                         <td className="px-4 py-3 text-right flex items-center justify-end gap-2">
-                          <button 
-                            onClick={() => setEditingUser(editingUser === member.id ? null : member.id)} 
+                          <button
+                            onClick={() => setEditingUser(editingUser === member.id ? null : member.id)}
                             className={`${editingUser === member.id ? 'text-primary' : 'text-slate-400'} hover:text-primary transition-colors`}
                           >
                             <Edit size={16} />
@@ -554,23 +553,23 @@ export function SettingsScreen() {
                           <td colSpan="4" className="px-4 py-4 border-t border-slate-200">
                             <h4 className="font-medium text-slate-800 mb-4 text-sm">Permissions for {member.name.split(' ')[0]}</h4>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                              
+
                               <div className="space-y-3">
                                 <h5 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Bookings & Events</h5>
                                 <label className="flex items-start gap-2 text-sm text-slate-700 cursor-pointer">
-                                  <input type="checkbox" defaultChecked className="mt-1 rounded text-primary focus:ring-primary" /> 
+                                  <input type="checkbox" defaultChecked className="mt-1 rounded text-primary focus:ring-primary" />
                                   <span>Own Scheduler page</span>
                                 </label>
                                 <label className="flex items-start gap-2 text-sm text-slate-700 cursor-pointer">
-                                  <input type="checkbox" defaultChecked={member.role === 'Admin'} className="mt-1 rounded text-primary focus:ring-primary" /> 
+                                  <input type="checkbox" defaultChecked={member.role === 'Admin'} className="mt-1 rounded text-primary focus:ring-primary" />
                                   <span>Can manage global event templates</span>
                                 </label>
                                 <label className="flex items-start gap-2 text-sm text-slate-700 cursor-pointer">
-                                  <input type="checkbox" defaultChecked={member.role === 'Admin' || member.role === 'Editor'} className="mt-1 rounded text-primary focus:ring-primary" /> 
+                                  <input type="checkbox" defaultChecked={member.role === 'Admin' || member.role === 'Editor'} className="mt-1 rounded text-primary focus:ring-primary" />
                                   <span>Can view all team bookings</span>
                                 </label>
                                 <label className="flex items-start gap-2 text-sm text-slate-700 cursor-pointer">
-                                  <input type="checkbox" defaultChecked={member.role === 'Admin' || member.role === 'Editor'} className="mt-1 rounded text-primary focus:ring-primary" /> 
+                                  <input type="checkbox" defaultChecked={member.role === 'Admin' || member.role === 'Editor'} className="mt-1 rounded text-primary focus:ring-primary" />
                                   <span>Can reassign bookings</span>
                                 </label>
                               </div>
@@ -578,11 +577,11 @@ export function SettingsScreen() {
                               <div className="space-y-3">
                                 <h5 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Monetization</h5>
                                 <label className="flex items-start gap-2 text-sm text-slate-700 cursor-pointer">
-                                  <input type="checkbox" defaultChecked={member.role === 'Admin' || member.role === 'Editor'} className="mt-1 rounded text-primary focus:ring-primary" /> 
+                                  <input type="checkbox" defaultChecked={member.role === 'Admin' || member.role === 'Editor'} className="mt-1 rounded text-primary focus:ring-primary" />
                                   <span>Can edit pricing & fees</span>
                                 </label>
                                 <label className="flex items-start gap-2 text-sm text-slate-700 cursor-pointer">
-                                  <input type="checkbox" defaultChecked={member.role === 'Admin'} className="mt-1 rounded text-primary focus:ring-primary" /> 
+                                  <input type="checkbox" defaultChecked={member.role === 'Admin'} className="mt-1 rounded text-primary focus:ring-primary" />
                                   <span>Can view team revenue analytics</span>
                                 </label>
                               </div>
@@ -590,15 +589,15 @@ export function SettingsScreen() {
                               <div className="space-y-3">
                                 <h5 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Administrative</h5>
                                 <label className="flex items-start gap-2 text-sm text-slate-700 cursor-pointer">
-                                  <input type="checkbox" defaultChecked={member.role === 'Admin'} className="mt-1 rounded text-primary focus:ring-primary" /> 
+                                  <input type="checkbox" defaultChecked={member.role === 'Admin'} className="mt-1 rounded text-primary focus:ring-primary" />
                                   <span>Can manage integrations</span>
                                 </label>
                                 <label className="flex items-start gap-2 text-sm text-slate-700 cursor-pointer">
-                                  <input type="checkbox" defaultChecked={member.role === 'Admin'} className="mt-1 rounded text-primary focus:ring-primary" /> 
+                                  <input type="checkbox" defaultChecked={member.role === 'Admin'} className="mt-1 rounded text-primary focus:ring-primary" />
                                   <span>Can invite/remove members</span>
                                 </label>
                                 <label className="flex items-start gap-2 text-sm text-slate-700 cursor-pointer">
-                                  <input type="checkbox" defaultChecked={member.role === 'Admin'} className="mt-1 rounded text-primary focus:ring-primary" /> 
+                                  <input type="checkbox" defaultChecked={member.role === 'Admin'} className="mt-1 rounded text-primary focus:ring-primary" />
                                   <span>Can export data</span>
                                 </label>
                               </div>
@@ -619,11 +618,11 @@ export function SettingsScreen() {
         {activeTab === 'Integrations' && (
           <div className="p-6 space-y-8">
             <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2"><Puzzle className="text-orange-500" /> Integrations</h3>
-            
+
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <div className="space-y-6">
                 <h4 className="font-semibold text-slate-700 border-b border-slate-100 pb-2">Admin Allowed Integrations</h4>
-                
+
                 <div className="flex items-center justify-between p-4 border border-slate-200 rounded-xl bg-white shadow-sm">
                   <div className="flex items-center gap-4">
                     <div className="w-10 h-10 bg-blue-50 text-blue-500 rounded flex items-center justify-center">
@@ -636,7 +635,7 @@ export function SettingsScreen() {
                   </div>
                   <ToggleSwitch checked={toggles.googleCal} onChange={() => handleToggle('googleCal')} />
                 </div>
-                
+
                 <div className="flex items-center justify-between p-4 border border-slate-200 rounded-xl bg-white shadow-sm">
                   <div className="flex items-center gap-4">
                     <div className="w-10 h-10 bg-red-50 text-red-500 rounded flex items-center justify-center">
@@ -692,7 +691,7 @@ export function SettingsScreen() {
 
               <div className="space-y-6">
                 <h4 className="font-semibold text-slate-700 border-b border-slate-100 pb-2">API & Webhooks</h4>
-                
+
                 <div className="bg-slate-50 border border-slate-200 rounded-xl p-4">
                   <div className="flex justify-between items-center mb-3">
                     <h5 className="text-sm font-bold text-slate-800">API Keys</h5>
@@ -732,95 +731,95 @@ export function SettingsScreen() {
               </div>
               <ToggleSwitch checked={toggles.monetizationOn} onChange={() => handleToggle('monetizationOn')} />
             </div>
-            
+
             {toggles.monetizationOn && (
               <>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 animate-fade-in">
                   <div className="space-y-6">
-                  
-                  <div className="space-y-4">
-                    <h4 className="font-semibold text-slate-700 border-b border-slate-100 pb-2">Payment Gateways</h4>
-                    
-                    <div className="p-6 border border-slate-200 rounded-xl bg-gradient-to-br from-indigo-50 to-white shadow-sm">
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className="w-8 h-8 bg-indigo-600 rounded flex items-center justify-center text-white font-bold text-sm">S</div>
-                        <h4 className="font-bold text-slate-800">Stripe Connect</h4>
-                      </div>
-                      <p className="text-sm text-slate-500 mb-4">Accept credit cards securely worldwide. Instant payouts.</p>
-                      <button className="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 shadow-sm w-full">Connect with Stripe</button>
-                    </div>
 
-                    <div className="p-6 border border-slate-200 rounded-xl bg-gradient-to-br from-blue-50 to-white shadow-sm">
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className="w-8 h-8 bg-[#02042B] rounded flex items-center justify-center text-white font-bold text-sm">R</div>
-                        <h4 className="font-bold text-slate-800">Razorpay</h4>
-                      </div>
-                      <p className="text-sm text-slate-500 mb-4">Accept UPI, cards, and wallets. Best for Indian customers.</p>
-                      <button className="px-4 py-2 bg-[#02042B] text-white text-sm font-medium rounded-lg hover:bg-[#12143B] shadow-sm w-full">Connect with Razorpay</button>
-                    </div>
-                  </div>
-                  
-                </div>
+                    <div className="space-y-4">
+                      <h4 className="font-semibold text-slate-700 border-b border-slate-100 pb-2">Payment Gateways</h4>
 
-                <div className="space-y-6">
-                  
-                  <div className="space-y-4">
-                    <h4 className="font-semibold text-slate-700 border-b border-slate-100 pb-2">Invoice & Tax Settings</h4>
-                    
-                    <div className="p-4 border border-slate-200 rounded-xl bg-white shadow-sm space-y-4">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <h5 className="font-medium text-slate-800 text-sm">Enable Tax Invoicing</h5>
-                          <p className="text-xs text-slate-500">Collect tax info and generate legal invoices.</p>
+                      <div className="p-6 border border-slate-200 rounded-xl bg-gradient-to-br from-indigo-50 to-white shadow-sm">
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="w-8 h-8 bg-indigo-600 rounded flex items-center justify-center text-white font-bold text-sm">S</div>
+                          <h4 className="font-bold text-slate-800">Stripe Connect</h4>
                         </div>
-                        <ToggleSwitch checked={toggles.taxInvoicing} onChange={() => handleToggle('taxInvoicing')} />
+                        <p className="text-sm text-slate-500 mb-4">Accept credit cards securely worldwide. Instant payouts.</p>
+                        <button className="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 shadow-sm w-full">Connect with Stripe</button>
                       </div>
-                      
-                      {toggles.taxInvoicing && (
-                        <div className="pt-4 border-t border-slate-100 space-y-3 animate-fade-in">
+
+                      <div className="p-6 border border-slate-200 rounded-xl bg-gradient-to-br from-blue-50 to-white shadow-sm">
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="w-8 h-8 bg-[#02042B] rounded flex items-center justify-center text-white font-bold text-sm">R</div>
+                          <h4 className="font-bold text-slate-800">Razorpay</h4>
+                        </div>
+                        <p className="text-sm text-slate-500 mb-4">Accept UPI, cards, and wallets. Best for Indian customers.</p>
+                        <button className="px-4 py-2 bg-[#02042B] text-white text-sm font-medium rounded-lg hover:bg-[#12143B] shadow-sm w-full">Connect with Razorpay</button>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div className="space-y-6">
+
+                    <div className="space-y-4">
+                      <h4 className="font-semibold text-slate-700 border-b border-slate-100 pb-2">Invoice & Tax Settings</h4>
+
+                      <div className="p-4 border border-slate-200 rounded-xl bg-white shadow-sm space-y-4">
+                        <div className="flex items-center justify-between">
                           <div>
-                            <label className="block text-xs font-medium text-slate-700 mb-1">Business Name</label>
-                            <input type="text" placeholder="e.g. Meetly Inc." className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm outline-none focus:border-primary" />
+                            <h5 className="font-medium text-slate-800 text-sm">Enable Tax Invoicing</h5>
+                            <p className="text-xs text-slate-500">Collect tax info and generate legal invoices.</p>
                           </div>
-                          <div className="grid grid-cols-2 gap-3">
-                            <div>
-                              <label className="block text-xs font-medium text-slate-700 mb-1">Tax ID Type</label>
-                              <select className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm bg-white outline-none focus:border-primary">
-                                <option>GSTIN (India)</option>
-                                <option>VAT (EU/UK)</option>
-                                <option>EIN (US)</option>
-                              </select>
-                            </div>
-                            <div>
-                              <label className="block text-xs font-medium text-slate-700 mb-1">Tax ID Number</label>
-                              <input type="text" placeholder="e.g. 22AAAAA0000A1Z5" className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm outline-none focus:border-primary" />
-                            </div>
-                          </div>
+                          <ToggleSwitch checked={toggles.taxInvoicing} onChange={() => handleToggle('taxInvoicing')} />
                         </div>
-                      )}
-                    </div>
-                  </div>
 
-                  <div className="border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-                    <div className="p-4 bg-slate-50 border-b border-slate-200 flex justify-between items-center">
-                       <h4 className="font-medium text-slate-800 text-sm">Global Price Templates</h4>
-                       <button className="text-xs text-primary font-medium flex items-center gap-1"><Plus size={14}/> Add New</button>
+                        {toggles.taxInvoicing && (
+                          <div className="pt-4 border-t border-slate-100 space-y-3 animate-fade-in">
+                            <div>
+                              <label className="block text-xs font-medium text-slate-700 mb-1">Business Name</label>
+                              <input type="text" placeholder="e.g. Meetly Inc." className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm outline-none focus:border-primary" />
+                            </div>
+                            <div className="grid grid-cols-2 gap-3">
+                              <div>
+                                <label className="block text-xs font-medium text-slate-700 mb-1">Tax ID Type</label>
+                                <select className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm bg-white outline-none focus:border-primary">
+                                  <option>GSTIN (India)</option>
+                                  <option>VAT (EU/UK)</option>
+                                  <option>EIN (US)</option>
+                                </select>
+                              </div>
+                              <div>
+                                <label className="block text-xs font-medium text-slate-700 mb-1">Tax ID Number</label>
+                                <input type="text" placeholder="e.g. 22AAAAA0000A1Z5" className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm outline-none focus:border-primary" />
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     </div>
-                    <table className="w-full text-left text-sm bg-white">
-                      <tbody className="divide-y divide-slate-100">
-                        <tr>
-                          <td className="px-4 py-3 font-medium text-slate-700">1 Hour Strategy</td>
-                          <td className="px-4 py-3 text-slate-500">$50.00</td>
-                          <td className="px-4 py-3 text-right"><button className="text-slate-400 hover:text-primary"><Edit size={16}/></button></td>
-                        </tr>
-                        <tr>
-                          <td className="px-4 py-3 font-medium text-slate-700">Quick Consult</td>
-                          <td className="px-4 py-3 text-slate-500">$25.00</td>
-                          <td className="px-4 py-3 text-right"><button className="text-slate-400 hover:text-primary"><Edit size={16}/></button></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+
+                    <div className="border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                      <div className="p-4 bg-slate-50 border-b border-slate-200 flex justify-between items-center">
+                        <h4 className="font-medium text-slate-800 text-sm">Global Price Templates</h4>
+                        <button className="text-xs text-primary font-medium flex items-center gap-1"><Plus size={14} /> Add New</button>
+                      </div>
+                      <table className="w-full text-left text-sm bg-white">
+                        <tbody className="divide-y divide-slate-100">
+                          <tr>
+                            <td className="px-4 py-3 font-medium text-slate-700">1 Hour Strategy</td>
+                            <td className="px-4 py-3 text-slate-500">$50.00</td>
+                            <td className="px-4 py-3 text-right"><button className="text-slate-400 hover:text-primary"><Edit size={16} /></button></td>
+                          </tr>
+                          <tr>
+                            <td className="px-4 py-3 font-medium text-slate-700">Quick Consult</td>
+                            <td className="px-4 py-3 text-slate-500">$25.00</td>
+                            <td className="px-4 py-3 text-right"><button className="text-slate-400 hover:text-primary"><Edit size={16} /></button></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
 
                     <div className="flex items-center justify-between p-4 border border-slate-100 rounded-xl bg-white shadow-sm">
                       <div>
@@ -830,102 +829,102 @@ export function SettingsScreen() {
                       <ToggleSwitch checked={toggles.autoReceipt} onChange={() => handleToggle('autoReceipt')} />
                     </div>
                   </div>
-              </div>
-
-              {/* Full Width Section */}
-              <div className="space-y-4 pt-6 border-t border-slate-100 mt-8">
-                <h4 className="font-semibold text-slate-700 border-b border-slate-100 pb-2">Payment Notifications</h4>
-                
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {['success', 'failed', 'pending'].map((type) => (
-                    <div key={type} className="p-4 border border-slate-100 rounded-xl bg-white shadow-sm space-y-4 flex flex-col transition-all">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <h5 className="font-medium text-slate-800 text-sm capitalize">Payment {type}</h5>
-                          <p className="text-[10px] text-slate-500 mt-1">Notify when a payment is {type}.</p>
-                        </div>
-                        <ToggleSwitch 
-                          checked={paymentAlertSettings[type].enabled} 
-                          onChange={() => setPaymentAlertSettings({...paymentAlertSettings, [type]: {...paymentAlertSettings[type], enabled: !paymentAlertSettings[type].enabled}})} 
-                        />
-                      </div>
-
-                      {paymentAlertSettings[type].enabled && (
-                        <div className="pt-4 border-t border-slate-100 animate-slide-up flex flex-col gap-4 flex-1">
-                          <div className="grid grid-cols-2 gap-4">
-                            <div>
-                              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Channel</label>
-                              <select 
-                                value={paymentAlertSettings[type].channel}
-                                onChange={(e) => setPaymentAlertSettings({...paymentAlertSettings, [type]: {...paymentAlertSettings[type], channel: e.target.value}})}
-                                className="w-full px-2 py-1.5 border border-slate-200 rounded text-sm bg-slate-50 outline-none"
-                              >
-                                <option>Email</option>
-                                <option>WhatsApp</option>
-                              </select>
-                            </div>
-
-                            <div>
-                              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Target</label>
-                              <select 
-                                value={paymentAlertSettings[type].target}
-                                onChange={(e) => setPaymentAlertSettings({...paymentAlertSettings, [type]: {...paymentAlertSettings[type], target: e.target.value}})}
-                                className="w-full px-2 py-1.5 border border-slate-200 rounded text-sm bg-slate-50 outline-none"
-                              >
-                                <option>Invitee</option>
-                                <option>Host</option>
-                                <option>Both</option>
-                              </select>
-                            </div>
-                          </div>
-
-                          <div className="flex items-end pb-0.5">
-                            <button 
-                              onClick={() => setPaymentAlertSettings({...paymentAlertSettings, [type]: {...paymentAlertSettings[type], isEditing: !paymentAlertSettings[type].isEditing}})}
-                              className={`text-sm font-medium flex items-center gap-1 ${paymentAlertSettings[type].isEditing ? 'text-indigo-700' : 'text-primary hover:text-indigo-700'}`}
-                            >
-                              <Edit size={14} /> {paymentAlertSettings[type].isEditing ? 'Close Template' : 'Edit Template'}
-                            </button>
-                          </div>
-
-                          {paymentAlertSettings[type].isEditing && (
-                            <div className="mt-2 flex-1 flex flex-col">
-                              <textarea 
-                                value={paymentAlertSettings[type].template}
-                                onChange={(e) => setPaymentAlertSettings({...paymentAlertSettings, [type]: {...paymentAlertSettings[type], template: e.target.value}})}
-                                className="w-full flex-1 min-h-[80px] px-3 py-2 border border-slate-200 rounded-lg text-xs outline-none focus:border-primary resize-none font-mono bg-slate-50"
-                                placeholder="Write your custom message here..."
-                              />
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  ))}
                 </div>
-              </div>
-            </>
-          )}
-        </div>
-      )}
 
-      {/* NOTIFICATIONS TAB */}
+                {/* Full Width Section */}
+                <div className="space-y-4 pt-6 border-t border-slate-100 mt-8">
+                  <h4 className="font-semibold text-slate-700 border-b border-slate-100 pb-2">Payment Notifications</h4>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {['success', 'failed', 'pending'].map((type) => (
+                      <div key={type} className="p-4 border border-slate-100 rounded-xl bg-white shadow-sm space-y-4 flex flex-col transition-all">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h5 className="font-medium text-slate-800 text-sm capitalize">Payment {type}</h5>
+                            <p className="text-[10px] text-slate-500 mt-1">Notify when a payment is {type}.</p>
+                          </div>
+                          <ToggleSwitch
+                            checked={paymentAlertSettings[type].enabled}
+                            onChange={() => setPaymentAlertSettings({ ...paymentAlertSettings, [type]: { ...paymentAlertSettings[type], enabled: !paymentAlertSettings[type].enabled } })}
+                          />
+                        </div>
+
+                        {paymentAlertSettings[type].enabled && (
+                          <div className="pt-4 border-t border-slate-100 animate-slide-up flex flex-col gap-4 flex-1">
+                            <div className="grid grid-cols-2 gap-4">
+                              <div>
+                                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Channel</label>
+                                <select
+                                  value={paymentAlertSettings[type].channel}
+                                  onChange={(e) => setPaymentAlertSettings({ ...paymentAlertSettings, [type]: { ...paymentAlertSettings[type], channel: e.target.value } })}
+                                  className="w-full px-2 py-1.5 border border-slate-200 rounded text-sm bg-slate-50 outline-none"
+                                >
+                                  <option>Email</option>
+                                  <option>WhatsApp</option>
+                                </select>
+                              </div>
+
+                              <div>
+                                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Target</label>
+                                <select
+                                  value={paymentAlertSettings[type].target}
+                                  onChange={(e) => setPaymentAlertSettings({ ...paymentAlertSettings, [type]: { ...paymentAlertSettings[type], target: e.target.value } })}
+                                  className="w-full px-2 py-1.5 border border-slate-200 rounded text-sm bg-slate-50 outline-none"
+                                >
+                                  <option>Invitee</option>
+                                  <option>Host</option>
+                                  <option>Both</option>
+                                </select>
+                              </div>
+                            </div>
+
+                            <div className="flex items-end pb-0.5">
+                              <button
+                                onClick={() => setPaymentAlertSettings({ ...paymentAlertSettings, [type]: { ...paymentAlertSettings[type], isEditing: !paymentAlertSettings[type].isEditing } })}
+                                className={`text-sm font-medium flex items-center gap-1 ${paymentAlertSettings[type].isEditing ? 'text-indigo-700' : 'text-primary hover:text-indigo-700'}`}
+                              >
+                                <Edit size={14} /> {paymentAlertSettings[type].isEditing ? 'Close Template' : 'Edit Template'}
+                              </button>
+                            </div>
+
+                            {paymentAlertSettings[type].isEditing && (
+                              <div className="mt-2 flex-1 flex flex-col">
+                                <textarea
+                                  value={paymentAlertSettings[type].template}
+                                  onChange={(e) => setPaymentAlertSettings({ ...paymentAlertSettings, [type]: { ...paymentAlertSettings[type], template: e.target.value } })}
+                                  className="w-full flex-1 min-h-[80px] px-3 py-2 border border-slate-200 rounded-lg text-xs outline-none focus:border-primary resize-none font-mono bg-slate-50"
+                                  placeholder="Write your custom message here..."
+                                />
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        )}
+
+        {/* NOTIFICATIONS TAB */}
         {activeTab === 'Notifications' && (
           <div className="p-6 space-y-8 animate-fade-in">
             <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2"><Bell className="text-amber-500" /> Notifications & Reminders</h3>
-            
+
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <div>
                   <h4 className="font-semibold text-slate-800">Automated Workflows</h4>
                   <p className="text-xs text-slate-500">Send custom reminders and follow-ups to hosts and invitees via Email or WhatsApp.</p>
                 </div>
-                <button 
+                <button
                   onClick={() => {
-                    setReminders([...reminders, { 
-                      id: Date.now().toString(), 
-                      time: '60 Minutes Before', 
-                      type: 'Email', 
+                    setReminders([...reminders, {
+                      id: Date.now().toString(),
+                      time: '60 Minutes Before',
+                      type: 'Email',
                       target: 'Invitee',
                       isCustomTime: false,
                       isEditingTemplate: false,
@@ -934,7 +933,7 @@ export function SettingsScreen() {
                   }}
                   className="px-3 py-1.5 bg-slate-100 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-200 transition-colors flex items-center gap-1"
                 >
-                  <Plus size={14} /> Add Reminder
+                  <Plus size={14} /> Add Notification
                 </button>
               </div>
 
@@ -943,11 +942,11 @@ export function SettingsScreen() {
                   <div key={reminder.id} className="p-4 border border-slate-200 rounded-xl bg-white shadow-sm flex flex-col transition-all">
                     <div className="flex items-center gap-4">
                       <div className="flex-1 grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-                        
+
                         <div>
                           <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Trigger Time</label>
                           {!reminder.isCustomTime ? (
-                            <select 
+                            <select
                               value={reminder.time}
                               onChange={(e) => {
                                 const val = e.target.value;
@@ -974,8 +973,8 @@ export function SettingsScreen() {
                             </select>
                           ) : (
                             <div className="flex items-center gap-1">
-                              <input 
-                                type="number" 
+                              <input
+                                type="number"
                                 value={reminder.customValue || ''}
                                 onChange={(e) => {
                                   const newRems = [...reminders];
@@ -984,7 +983,7 @@ export function SettingsScreen() {
                                 }}
                                 className="w-10 px-1 py-1.5 border border-slate-200 rounded text-xs outline-none text-center bg-slate-50"
                               />
-                              <select 
+                              <select
                                 value={reminder.customUnit || 'Minutes'}
                                 onChange={(e) => {
                                   const newRems = [...reminders];
@@ -997,7 +996,7 @@ export function SettingsScreen() {
                                 <option>Hours</option>
                                 <option>Days</option>
                               </select>
-                              <select 
+                              <select
                                 value={reminder.customRelation || 'Before'}
                                 onChange={(e) => {
                                   const newRems = [...reminders];
@@ -1009,7 +1008,7 @@ export function SettingsScreen() {
                                 <option>Before</option>
                                 <option>After</option>
                               </select>
-                              <button 
+                              <button
                                 onClick={() => {
                                   const newRems = [...reminders];
                                   newRems[idx].isCustomTime = false;
@@ -1026,7 +1025,7 @@ export function SettingsScreen() {
 
                         <div>
                           <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Channel</label>
-                          <select 
+                          <select
                             value={reminder.type}
                             onChange={(e) => {
                               const newRems = [...reminders];
@@ -1042,7 +1041,7 @@ export function SettingsScreen() {
 
                         <div>
                           <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Target</label>
-                          <select 
+                          <select
                             value={reminder.target}
                             onChange={(e) => {
                               const newRems = [...reminders];
@@ -1058,7 +1057,7 @@ export function SettingsScreen() {
                         </div>
 
                         <div className="flex items-end h-full pb-0.5">
-                          <button 
+                          <button
                             onClick={() => {
                               const newRems = [...reminders];
                               newRems[idx].isEditingTemplate = !newRems[idx].isEditingTemplate;
@@ -1071,8 +1070,8 @@ export function SettingsScreen() {
                         </div>
 
                       </div>
-                      
-                      <button 
+
+                      <button
                         onClick={() => setReminders(reminders.filter(r => r.id !== reminder.id))}
                         className="text-slate-300 hover:text-red-500 transition-colors p-2 h-full flex items-center justify-center"
                       >
@@ -1085,14 +1084,14 @@ export function SettingsScreen() {
                         <div className="flex items-center justify-between mb-2">
                           <label className="block text-[10px] font-bold text-slate-700 uppercase tracking-wider">Message Template</label>
                           <div className="text-[10px] text-slate-500 flex gap-2">
-                            Variables: 
+                            Variables:
                             <span className="bg-slate-100 px-1 py-0.5 rounded cursor-pointer hover:bg-slate-200">{`{{invitee.name}}`}</span>
                             <span className="bg-slate-100 px-1 py-0.5 rounded cursor-pointer hover:bg-slate-200">{`{{host.name}}`}</span>
                             <span className="bg-slate-100 px-1 py-0.5 rounded cursor-pointer hover:bg-slate-200">{`{{meeting.time}}`}</span>
                             <span className="bg-slate-100 px-1 py-0.5 rounded cursor-pointer hover:bg-slate-200">{`{{meeting.link}}`}</span>
                           </div>
                         </div>
-                        <textarea 
+                        <textarea
                           value={reminder.templateContent}
                           onChange={(e) => {
                             const newRems = [...reminders];
@@ -1128,7 +1127,7 @@ export function SettingsScreen() {
 
               <div className="space-y-4">
                 <h4 className="font-semibold text-slate-700 border-b border-slate-100 pb-2">Host Platform Alerts</h4>
-                
+
                 <div className="p-4 border border-slate-100 rounded-xl bg-slate-50 space-y-4">
                   <div className="flex items-center justify-between">
                     <div>
@@ -1137,14 +1136,14 @@ export function SettingsScreen() {
                     </div>
                     <ToggleSwitch checked={toggles.hostNotification} onChange={() => handleToggle('hostNotification')} />
                   </div>
-                  
+
                   {toggles.hostNotification && (
                     <div className="pt-4 border-t border-slate-200 animate-slide-up grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div>
                         <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Channel</label>
-                        <select 
+                        <select
                           value={hostAlertSettings.newBooking.channel}
-                          onChange={(e) => setHostAlertSettings({...hostAlertSettings, newBooking: {...hostAlertSettings.newBooking, channel: e.target.value}})}
+                          onChange={(e) => setHostAlertSettings({ ...hostAlertSettings, newBooking: { ...hostAlertSettings.newBooking, channel: e.target.value } })}
                           className="w-full px-2 py-1.5 border border-slate-200 rounded text-sm bg-white outline-none"
                         >
                           <option>Email</option>
@@ -1154,9 +1153,9 @@ export function SettingsScreen() {
 
                       <div>
                         <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Target</label>
-                        <select 
+                        <select
                           value={hostAlertSettings.newBooking.target}
-                          onChange={(e) => setHostAlertSettings({...hostAlertSettings, newBooking: {...hostAlertSettings.newBooking, target: e.target.value}})}
+                          onChange={(e) => setHostAlertSettings({ ...hostAlertSettings, newBooking: { ...hostAlertSettings.newBooking, target: e.target.value } })}
                           className="w-full px-2 py-1.5 border border-slate-200 rounded text-sm bg-white outline-none"
                         >
                           <option>Host</option>
@@ -1166,8 +1165,8 @@ export function SettingsScreen() {
                       </div>
 
                       <div className="flex items-end pb-0.5">
-                        <button 
-                          onClick={() => setHostAlertSettings({...hostAlertSettings, newBooking: {...hostAlertSettings.newBooking, isEditing: !hostAlertSettings.newBooking.isEditing}})}
+                        <button
+                          onClick={() => setHostAlertSettings({ ...hostAlertSettings, newBooking: { ...hostAlertSettings.newBooking, isEditing: !hostAlertSettings.newBooking.isEditing } })}
                           className={`text-sm font-medium flex items-center gap-1 ${hostAlertSettings.newBooking.isEditing ? 'text-indigo-700' : 'text-primary hover:text-indigo-700'}`}
                         >
                           <Edit size={14} /> {hostAlertSettings.newBooking.isEditing ? 'Close Template' : 'Edit Template'}
@@ -1176,9 +1175,9 @@ export function SettingsScreen() {
 
                       {hostAlertSettings.newBooking.isEditing && (
                         <div className="col-span-1 md:col-span-3 mt-2">
-                          <textarea 
+                          <textarea
                             value={hostAlertSettings.newBooking.template}
-                            onChange={(e) => setHostAlertSettings({...hostAlertSettings, newBooking: {...hostAlertSettings.newBooking, template: e.target.value}})}
+                            onChange={(e) => setHostAlertSettings({ ...hostAlertSettings, newBooking: { ...hostAlertSettings.newBooking, template: e.target.value } })}
                             className="w-full h-20 px-3 py-2 border border-slate-200 rounded-lg text-xs outline-none focus:border-primary resize-none font-mono bg-white"
                             placeholder="Write your custom message here..."
                           />
@@ -1201,9 +1200,9 @@ export function SettingsScreen() {
                     <div className="pt-4 border-t border-slate-200 animate-slide-up grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div>
                         <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Channel</label>
-                        <select 
+                        <select
                           value={hostAlertSettings.cancelReschedule.channel}
-                          onChange={(e) => setHostAlertSettings({...hostAlertSettings, cancelReschedule: {...hostAlertSettings.cancelReschedule, channel: e.target.value}})}
+                          onChange={(e) => setHostAlertSettings({ ...hostAlertSettings, cancelReschedule: { ...hostAlertSettings.cancelReschedule, channel: e.target.value } })}
                           className="w-full px-2 py-1.5 border border-slate-200 rounded text-sm bg-white outline-none"
                         >
                           <option>Email</option>
@@ -1213,9 +1212,9 @@ export function SettingsScreen() {
 
                       <div>
                         <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Target</label>
-                        <select 
+                        <select
                           value={hostAlertSettings.cancelReschedule.target}
-                          onChange={(e) => setHostAlertSettings({...hostAlertSettings, cancelReschedule: {...hostAlertSettings.cancelReschedule, target: e.target.value}})}
+                          onChange={(e) => setHostAlertSettings({ ...hostAlertSettings, cancelReschedule: { ...hostAlertSettings.cancelReschedule, target: e.target.value } })}
                           className="w-full px-2 py-1.5 border border-slate-200 rounded text-sm bg-white outline-none"
                         >
                           <option>Host</option>
@@ -1225,8 +1224,8 @@ export function SettingsScreen() {
                       </div>
 
                       <div className="flex items-end pb-0.5">
-                        <button 
-                          onClick={() => setHostAlertSettings({...hostAlertSettings, cancelReschedule: {...hostAlertSettings.cancelReschedule, isEditing: !hostAlertSettings.cancelReschedule.isEditing}})}
+                        <button
+                          onClick={() => setHostAlertSettings({ ...hostAlertSettings, cancelReschedule: { ...hostAlertSettings.cancelReschedule, isEditing: !hostAlertSettings.cancelReschedule.isEditing } })}
                           className={`text-sm font-medium flex items-center gap-1 ${hostAlertSettings.cancelReschedule.isEditing ? 'text-indigo-700' : 'text-primary hover:text-indigo-700'}`}
                         >
                           <Edit size={14} /> {hostAlertSettings.cancelReschedule.isEditing ? 'Close Template' : 'Edit Template'}
@@ -1235,9 +1234,9 @@ export function SettingsScreen() {
 
                       {hostAlertSettings.cancelReschedule.isEditing && (
                         <div className="col-span-1 md:col-span-3 mt-2">
-                          <textarea 
+                          <textarea
                             value={hostAlertSettings.cancelReschedule.template}
-                            onChange={(e) => setHostAlertSettings({...hostAlertSettings, cancelReschedule: {...hostAlertSettings.cancelReschedule, template: e.target.value}})}
+                            onChange={(e) => setHostAlertSettings({ ...hostAlertSettings, cancelReschedule: { ...hostAlertSettings.cancelReschedule, template: e.target.value } })}
                             className="w-full h-20 px-3 py-2 border border-slate-200 rounded-lg text-xs outline-none focus:border-primary resize-none font-mono bg-white"
                             placeholder="Write your custom message here..."
                           />
@@ -1256,26 +1255,18 @@ export function SettingsScreen() {
         {activeTab === 'Invitee' && (
           <div className="p-6 space-y-8 animate-fade-in">
             <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2"><UserPlus className="text-indigo-500" /> Invitee Experience</h3>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="space-y-6">
                 <div className="space-y-4">
                   <h4 className="font-semibold text-slate-700 border-b border-slate-100 pb-2">Portal & Authentication</h4>
-                  
+
                   <div className="flex items-center justify-between p-4 border border-slate-100 rounded-xl bg-slate-50">
                     <div>
                       <h5 className="font-medium text-slate-800 text-sm">Invitee Portal</h5>
                       <p className="text-xs text-slate-500 mt-1">Allow invitees to view their past and upcoming meetings.</p>
                     </div>
                     <ToggleSwitch checked={toggles.inviteePortal} onChange={() => handleToggle('inviteePortal')} />
-                  </div>
-
-                  <div className="flex items-center justify-between p-4 border border-slate-100 rounded-xl bg-slate-50">
-                    <div>
-                      <h5 className="font-medium text-slate-800 text-sm">Require Authentication</h5>
-                      <p className="text-xs text-slate-500 mt-1">Invitees must log in or sign up before booking.</p>
-                    </div>
-                    <ToggleSwitch checked={toggles.inviteeAuth} onChange={() => handleToggle('inviteeAuth')} />
                   </div>
 
                   <div className="flex items-center justify-between p-4 border border-slate-100 rounded-xl bg-slate-50">
@@ -1299,7 +1290,7 @@ export function SettingsScreen() {
               <div className="space-y-6">
                 <div className="space-y-4">
                   <h4 className="font-semibold text-slate-700 border-b border-slate-100 pb-2">Pre-Meeting Questions</h4>
-                  
+
                   <div className="flex items-center justify-between p-4 border border-slate-100 rounded-xl bg-slate-50">
                     <div>
                       <h5 className="font-medium text-slate-800 text-sm">Allow Pre-Meeting Questions</h5>
@@ -1317,11 +1308,11 @@ export function SettingsScreen() {
         {activeTab === 'Security' && (
           <div className="p-6 space-y-8">
             <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2"><Shield className="text-emerald-600" /> Security</h3>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="space-y-6">
                 <h4 className="font-semibold text-slate-700 border-b border-slate-100 pb-2">Access & Auth</h4>
-                
+
                 <div className="flex items-center justify-between p-4 border border-slate-100 rounded-xl bg-slate-50">
                   <div>
                     <h5 className="font-medium text-slate-800 text-sm">Two-Factor Authentication (2FA)</h5>
@@ -1360,7 +1351,7 @@ export function SettingsScreen() {
 
               <div className="space-y-6">
                 <h4 className="font-semibold text-slate-700 border-b border-slate-100 pb-2">Meeting Protection</h4>
-                
+
                 <div className="flex items-center justify-between p-4 border border-slate-100 rounded-xl bg-slate-50">
                   <div>
                     <h5 className="font-medium text-slate-800 text-sm">Meeting Locks</h5>
@@ -1395,11 +1386,11 @@ export function SettingsScreen() {
         {activeTab === 'Data' && (
           <div className="p-6 space-y-8">
             <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2"><Server className="text-teal-500" /> Data & Privacy</h3>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="space-y-6">
                 <h4 className="font-semibold text-slate-700 border-b border-slate-100 pb-2">Retention Policies</h4>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Recording Retention</label>
                   <select className="w-full px-3 py-2 border border-slate-200 rounded-lg sm:text-sm bg-white">
@@ -1432,7 +1423,7 @@ export function SettingsScreen() {
 
               <div className="space-y-6">
                 <h4 className="font-semibold text-slate-700 border-b border-slate-100 pb-2">Privacy & Compliance</h4>
-                
+
                 <div className="flex items-center justify-between p-4 border border-slate-100 rounded-xl bg-slate-50">
                   <div>
                     <h5 className="font-medium text-slate-800 text-sm">Auto-Redact PII</h5>
@@ -1472,7 +1463,7 @@ export function SettingsScreen() {
 
       </div>
 
-      <DnsVerificationModal 
+      <DnsVerificationModal
         isOpen={domainModalOpen}
         onClose={() => setDomainModalOpen(false)}
         title="Verify Custom Domain"
@@ -1481,7 +1472,7 @@ export function SettingsScreen() {
         onVerify={() => setCustomDomainStatus('verified')}
       />
 
-      <DnsVerificationModal 
+      <DnsVerificationModal
         isOpen={emailModalOpen}
         onClose={() => setEmailModalOpen(false)}
         title="Verify Email Sender Domain"
@@ -1490,7 +1481,7 @@ export function SettingsScreen() {
         onVerify={() => setCustomEmailStatus('verified')}
       />
 
-      <InviteMemberModal 
+      <InviteMemberModal
         isOpen={inviteModalOpen}
         onClose={() => setInviteModalOpen(false)}
         onInvite={handleInvite}

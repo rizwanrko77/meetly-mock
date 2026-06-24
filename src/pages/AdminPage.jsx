@@ -10,6 +10,7 @@ import { MeetingsLibrary } from '../components/admin/MeetingsLibrary';
 import { AccountScreen } from '../components/admin/AccountScreen';
 import { SettingsScreen } from '../components/admin/SettingsScreen';
 import { EditProfileScreen } from '../components/admin/EditProfileScreen';
+import { MeetingDetailsPanel } from '../components/admin/MeetingDetailsPanel';
 import { LayoutDashboard, Calendar, PenTool, Video } from 'lucide-react';
 
 export function AdminPage() {
@@ -43,7 +44,7 @@ export function AdminPage() {
       case 'whiteboard':
         return <WhiteboardScreen />;
       case 'meetings':
-        return <MeetingsLibrary onMeetingSelect={handleItemSelect} />;
+        return <MeetingsLibrary onMeetingSelect={handleItemSelect} selectedMeeting={selectedItem} />;
       case 'account':
         return <AccountScreen />;
       case 'settings': return <SettingsScreen />;
@@ -73,24 +74,7 @@ export function AdminPage() {
         title={selectedItem?.type || "Details"}
       >
         {selectedItem ? (
-          <div className="space-y-4">
-            <h3 className="font-bold text-slate-800 text-lg">{selectedItem.host}'s Meeting</h3>
-            <div className="p-4 bg-slate-50 rounded-lg border border-slate-100">
-              <div className="text-sm font-medium text-slate-500 mb-1">Date</div>
-              <div className="text-slate-800">{new Date(selectedItem.date).toLocaleString()}</div>
-            </div>
-            <div className="p-4 bg-slate-50 rounded-lg border border-slate-100">
-              <div className="text-sm font-medium text-slate-500 mb-1">Participants</div>
-              <div className="text-slate-800">{selectedItem.participantsCount} Users</div>
-            </div>
-            <div className="p-4 bg-indigo-50 rounded-lg border border-indigo-100">
-              <div className="text-sm font-medium text-indigo-700 mb-1">AI Summary</div>
-              <div className="text-slate-700 text-sm">{selectedItem.summary}</div>
-            </div>
-            <button className="w-full py-2 bg-primary text-white rounded-lg font-medium shadow-sm hover:bg-indigo-700 transition-colors">
-              Share Recording
-            </button>
-          </div>
+          <MeetingDetailsPanel key={selectedItem.id} meeting={selectedItem} />
         ) : (
           <div className="text-slate-500 text-sm text-center mt-10">Select an item to view details.</div>
         )}

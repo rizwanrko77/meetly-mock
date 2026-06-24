@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { twMerge } from 'tailwind-merge';
 
-export function DataTable({ columns, data, onRowClick }) {
+export function DataTable({ columns, data, onRowClick, selectedRowId }) {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
 
   const sortedData = React.useMemo(() => {
@@ -57,8 +57,9 @@ export function DataTable({ columns, data, onRowClick }) {
                 key={row.id || index} 
                 onClick={() => onRowClick && onRowClick(row)}
                 className={twMerge(
-                  "border-b border-slate-100 hover:bg-slate-50 transition-colors",
-                  onRowClick ? "cursor-pointer" : ""
+                  "border-b border-slate-100 transition-colors",
+                  onRowClick ? "cursor-pointer" : "",
+                  selectedRowId === row.id ? "bg-indigo-50/70 hover:bg-indigo-50" : "hover:bg-slate-50"
                 )}
               >
                 {columns.map((col) => (
