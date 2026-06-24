@@ -4,6 +4,7 @@ import { TestHub } from './pages/TestHub';
 import { AuthPage } from './pages/AuthPage';
 import { AdminPage } from './pages/AdminPage';
 import { JoinPage } from './pages/JoinPage';
+import { PublicBookingPage } from './pages/PublicBookingPage';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/join" element={<JoinPage />} />
+        <Route path="/book/:username" element={<PublicBookingPage />} />
       </Routes>
     </BrowserRouter>
   );

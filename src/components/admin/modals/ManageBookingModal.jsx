@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Calendar as CalendarIcon, Clock, Users, Trash2, Edit2, AlertCircle } from 'lucide-react';
+import { X, Calendar as CalendarIcon, Clock, Users, Trash2, Edit2, AlertCircle, Link as LinkIcon, Share2 } from 'lucide-react';
 
 export function ManageBookingModal({ isOpen, onClose, booking, onAction }) {
   if (!isOpen || !booking) return null;
@@ -8,6 +8,8 @@ export function ManageBookingModal({ isOpen, onClose, booking, onAction }) {
     onAction(action, booking);
     onClose();
   };
+
+  const meetingLink = "meetly.com/j/123456789";
 
   return (
     <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in overflow-y-auto">
@@ -20,7 +22,7 @@ export function ManageBookingModal({ isOpen, onClose, booking, onAction }) {
         </div>
 
         <div className="p-6">
-          <div className="bg-slate-50 border border-slate-100 rounded-xl p-4 mb-6">
+          <div className="bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
             <h3 className="text-lg font-bold text-slate-800 mb-4">{booking.title}</h3>
             
             <div className="space-y-3">
@@ -44,6 +46,22 @@ export function ManageBookingModal({ isOpen, onClose, booking, onAction }) {
                 <p>This booking requires your manual confirmation.</p>
               </div>
             )}
+          </div>
+
+          <div className="w-full bg-white p-4 rounded-xl border border-slate-200 mb-6 flex flex-col gap-3">
+            <div className="text-sm font-medium text-slate-700">Meeting Link</div>
+            <div className="flex gap-2">
+              <div className="flex-1 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-600 flex items-center gap-2 overflow-hidden">
+                <LinkIcon size={14} className="text-slate-400 shrink-0" />
+                <span className="truncate">{meetingLink}</span>
+              </div>
+              <button 
+                onClick={() => navigator.clipboard.writeText(meetingLink)}
+                className="px-3 py-2 bg-indigo-50 text-indigo-700 rounded-lg font-medium text-sm hover:bg-indigo-100 transition-colors flex items-center gap-2"
+              >
+                <Share2 size={16} /> Share
+              </button>
+            </div>
           </div>
 
           <div className="space-y-3">

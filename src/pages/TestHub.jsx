@@ -26,12 +26,11 @@ export function TestHub() {
       color: 'bg-purple-50 text-purple-600',
     },
     {
-      title: 'Add New Feature',
-      description: 'Placeholder for future modules. Scalable architecture ready.',
+      title: 'Public Booking Page',
+      description: 'Calendly-style public scheduling page for invitees to book meetings.',
       icon: PlusCircle,
-      path: '#',
-      color: 'bg-slate-100 text-slate-400',
-      comingSoon: true,
+      path: '/book/alex', // Mocking a specific user route
+      color: 'bg-emerald-50 text-emerald-600',
     }
   ];
 

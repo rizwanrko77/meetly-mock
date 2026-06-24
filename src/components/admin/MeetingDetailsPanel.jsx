@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { UserPlus, UserMinus, Play, Download, X, Edit, Video, Users, FileText, Sparkles, User, RefreshCw, XCircle, ChevronLeft } from 'lucide-react';
+import { UserPlus, UserMinus, Play, Download, X, Edit, Video, Users, FileText, Sparkles, User, RefreshCw, XCircle, ChevronLeft, Link as LinkIcon, Share2 } from 'lucide-react';
 
 export function MeetingDetailsPanel({ meeting }) {
   if (!meeting) return null;
@@ -17,6 +17,8 @@ export function MeetingDetailsPanel({ meeting }) {
 }
 
 function ScheduledView({ meeting }) {
+  const meetingLink = "meetly.com/j/123456789";
+
   return (
     <div className="space-y-6">
       <div>
@@ -87,13 +89,31 @@ function ScheduledView({ meeting }) {
         </div>
       </div>
 
-      <div className="pt-4 border-t border-slate-200 space-y-3">
-        <button className="w-full py-2 bg-white border border-slate-200 text-slate-700 rounded-lg font-medium shadow-sm hover:bg-slate-50 transition-colors flex justify-center items-center gap-2">
-          <RefreshCw size={16} /> Reschedule
-        </button>
-        <button className="w-full py-2 bg-red-50 text-red-600 rounded-lg font-medium hover:bg-red-100 transition-colors flex justify-center items-center gap-2">
-          <XCircle size={16} /> Cancel Meeting
-        </button>
+      <div className="pt-4 border-t border-slate-200">
+        <div className="w-full bg-slate-50 p-4 rounded-xl border border-slate-200 mb-6 flex flex-col gap-3">
+          <div className="text-sm font-medium text-slate-700">Meeting Link</div>
+          <div className="flex gap-2">
+            <div className="flex-1 bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-600 flex items-center gap-2 overflow-hidden">
+              <LinkIcon size={14} className="text-slate-400 shrink-0" />
+              <span className="truncate">{meetingLink}</span>
+            </div>
+            <button 
+              onClick={() => navigator.clipboard.writeText(meetingLink)}
+              className="px-3 py-2 bg-indigo-50 text-indigo-700 rounded-lg font-medium text-sm hover:bg-indigo-100 transition-colors flex items-center gap-2"
+            >
+              <Share2 size={16} /> Share
+            </button>
+          </div>
+        </div>
+        
+        <div className="space-y-3">
+          <button className="w-full py-2 bg-white border border-slate-200 text-slate-700 rounded-lg font-medium shadow-sm hover:bg-slate-50 transition-colors flex justify-center items-center gap-2">
+            <RefreshCw size={16} /> Reschedule
+          </button>
+          <button className="w-full py-2 bg-red-50 text-red-600 rounded-lg font-medium hover:bg-red-100 transition-colors flex justify-center items-center gap-2">
+            <XCircle size={16} /> Cancel Meeting
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -399,22 +399,57 @@ export function AvailabilityModal({ isOpen, onClose, onSave }) {
             </div>
 
             <div className="border-t border-slate-100 pt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Buffer */}
-              <div>
-                <label className="block text-sm font-semibold text-slate-800 mb-3">Buffer Time</label>
-                <select 
-                  className="w-full max-w-xs px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                  value={bufferTime}
-                  onChange={e => setBufferTime(e.target.value)}
-                >
-                  <option value="0">No buffer</option>
-                  <option value="5">5 minutes</option>
-                  <option value="10">10 minutes</option>
-                  <option value="15">15 minutes</option>
-                  <option value="30">30 minutes</option>
-                  <option value="60">1 hour</option>
-                </select>
-                <p className="text-xs text-slate-500 mt-2">Time added before and after meetings.</p>
+              {/* Left column for Durations & Buffer */}
+              <div className="space-y-8">
+                {/* Durations */}
+                <div>
+                  <label className="block text-sm font-semibold text-slate-800 mb-3">Meeting Durations</label>
+                  <div className="flex flex-wrap gap-2">
+                    {[
+                      { label: '15 min', value: '15' },
+                      { label: '30 min', value: '30' },
+                      { label: '45 min', value: '45' },
+                      { label: '60 min', value: '60' },
+                      { label: 'Custom', value: 'custom' }
+                    ].map(d => {
+                      // Using a simple local state for mockup purposes, normally this would be in component state
+                      const isSelected = ['15', '30', '60'].includes(d.value);
+                      return (
+                        <button
+                          key={d.value}
+                          type="button"
+                          className={cn(
+                            "px-4 py-2 rounded-lg text-sm font-medium transition-all",
+                            isSelected
+                              ? "bg-primary text-white shadow-sm ring-2 ring-primary/20"
+                              : "bg-white text-slate-600 border border-slate-200 hover:border-primary/50 hover:bg-indigo-50"
+                          )}
+                        >
+                          {d.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <p className="text-xs text-slate-500 mt-2">Select the meeting lengths you want to offer publicly.</p>
+                </div>
+
+                {/* Buffer */}
+                <div>
+                  <label className="block text-sm font-semibold text-slate-800 mb-3">Buffer Time</label>
+                  <select 
+                    className="w-full max-w-xs px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                    value={bufferTime}
+                    onChange={e => setBufferTime(e.target.value)}
+                  >
+                    <option value="0">No buffer</option>
+                    <option value="5">5 minutes</option>
+                    <option value="10">10 minutes</option>
+                    <option value="15">15 minutes</option>
+                    <option value="30">30 minutes</option>
+                    <option value="60">1 hour</option>
+                  </select>
+                  <p className="text-xs text-slate-500 mt-2">Time added before and after meetings.</p>
+                </div>
               </div>
 
               {/* Confirmation Settings */}

@@ -7,7 +7,9 @@ export function PublicPageSettingsModal({ isOpen, onClose, onSave }) {
     welcomeMessage: 'Welcome to my scheduling page. Please follow the instructions to add an event to my calendar.',
     themeColor: '#4f46e5', // default primary
     hideBranding: false,
-    customUrl: 'meetly.com/u/my-page'
+    customUrl: 'meetly.com/u/my-page',
+    showUpcomingEvents: true,
+    showBookingCalendar: true
   });
 
   if (!isOpen) return null;
@@ -82,6 +84,42 @@ export function PublicPageSettingsModal({ isOpen, onClose, onSave }) {
                   />
                   <span className="text-sm font-mono text-slate-600">{settings.themeColor}</span>
                 </div>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider">Visibility Options</h3>
+              
+              <div className="flex items-center justify-between bg-slate-50 p-4 rounded-lg border border-slate-200">
+                <div>
+                  <div className="font-medium text-slate-800">Show Upcoming Events</div>
+                  <div className="text-sm text-slate-500">Display your public events on the scheduling page.</div>
+                </div>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input 
+                    type="checkbox" 
+                    className="sr-only peer"
+                    checked={settings.showUpcomingEvents}
+                    onChange={e => setSettings({ ...settings, showUpcomingEvents: e.target.checked })}
+                  />
+                  <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                </label>
+              </div>
+
+              <div className="flex items-center justify-between bg-slate-50 p-4 rounded-lg border border-slate-200">
+                <div>
+                  <div className="font-medium text-slate-800">Show Booking Calendar</div>
+                  <div className="text-sm text-slate-500">Allow users to book meetings via calendar.</div>
+                </div>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input 
+                    type="checkbox" 
+                    className="sr-only peer"
+                    checked={settings.showBookingCalendar}
+                    onChange={e => setSettings({ ...settings, showBookingCalendar: e.target.checked })}
+                  />
+                  <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                </label>
               </div>
             </div>
 

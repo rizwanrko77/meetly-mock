@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Plus, Settings, Clock, Link as LinkIcon } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Plus, Settings, Clock, ExternalLink } from 'lucide-react';
 import { RobustCalendar } from './calendar/RobustCalendar';
 import { NewMeetingModal } from './modals/NewMeetingModal';
 import { PublicPageSettingsModal } from './modals/PublicPageSettingsModal';
@@ -31,6 +32,14 @@ export function SchedulerScreen() {
         </div>
         
         <div className="flex flex-wrap items-center gap-3">
+          <Link 
+            to="/book/alex"
+            target="_blank"
+            className="px-4 py-2 bg-indigo-50 border border-indigo-100 text-indigo-700 text-sm font-medium rounded-lg hover:bg-indigo-100 transition-colors shadow-sm flex items-center gap-2"
+          >
+            <ExternalLink size={16} /> Preview Public Page
+          </Link>
+          
           <button 
             onClick={() => setActiveModal('settings')}
             className="px-4 py-2 bg-white border border-slate-200 text-slate-700 text-sm font-medium rounded-lg hover:bg-slate-50 transition-colors shadow-sm flex items-center gap-2"
