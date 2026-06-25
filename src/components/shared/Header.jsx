@@ -1,11 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Bell, Settings, LogOut, User as UserIcon } from 'lucide-react';
+import { Bell, Settings, LogOut, User as UserIcon, Plus, Video, Calendar } from 'lucide-react';
 import { currentUser } from '../../data/mockData';
+import { NewMeetingModal } from '../admin/modals/NewMeetingModal';
+import { JoinMeetingModal } from '../admin/modals/JoinMeetingModal';
 
 export function Header({ title }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [newDropdownOpen, setNewDropdownOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [showNewMeetingModal, setShowNewMeetingModal] = useState(false);
+  const [showJoinModal, setShowJoinModal] = useState(false);
   const headerRef = useRef(null);
   const navigate = useNavigate();
 
@@ -14,6 +19,7 @@ export function Header({ title }) {
       if (headerRef.current && !headerRef.current.contains(event.target)) {
         setDropdownOpen(false);
         setNotificationsOpen(false);
+        setNewDropdownOpen(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -21,7 +27,7 @@ export function Header({ title }) {
   }, []);
 
   return (
-    <header ref={headerRef} className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 shrink-0">
+    <header ref={headerRef} className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 shrink-0 z-40 relative">
       <div className="flex items-center md:hidden gap-2 text-primary font-bold text-xl">
         <div className="w-8 h-8 rounded bg-primary text-white flex items-center justify-center">M</div>
       </div>
@@ -29,6 +35,54 @@ export function Header({ title }) {
       <h1 className="text-xl font-semibold text-slate-800 hidden md:block">{title}</h1>
       
       <div className="flex items-center gap-4 ml-auto">
+        <button 
+          onClick={() => setShowJoinModal(true)}
+          className="hidden sm:flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-xl transition-colors"
+        >
+          <Video size={16} /> Join
+        </button>
+
+        <div className="relative">
+          <button 
+            onClick={() => { setNewDropdownOpen(!newDropdownOpen); setDropdownOpen(false); setNotificationsOpen(false); }}
+            className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-indigo-700 text-white font-medium rounded-xl transition-colors shadow-sm"
+          >
+            <Plus size={16} /> New
+          </button>
+          
+          {newDropdownOpen && (
+            <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg border border-slate-100 py-1 z-50 animate-fade-in">
+              <button 
+                onClick={() => { setNewDropdownOpen(false); navigate('/join'); }}
+                className="w-full px-4 py-3 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-3"
+              >
+                <div className="w-8 h-8 rounded-lg bg-indigo-50 text-primary flex items-center justify-center shrink-0">
+                  <Video size={16} />
+                </div>
+                <div>
+                  <div className="font-medium text-slate-800">Start Instant meeting</div>
+                  <div className="text-xs text-slate-500">Starts immediately</div>
+                </div>
+              </button>
+              <div className="h-px bg-slate-100 my-1"></div>
+              <button 
+                onClick={() => { setNewDropdownOpen(false); setShowNewMeetingModal(true); }}
+                className="w-full px-4 py-3 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-3"
+              >
+                <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                  <Calendar size={16} />
+                </div>
+                <div>
+                  <div className="font-medium text-slate-800">Schedule</div>
+                  <div className="text-xs text-slate-500">Create new meeting</div>
+                </div>
+              </button>
+            </div>
+          )}
+        </div>
+
+        <div className="h-8 w-px bg-slate-200 mx-2 hidden sm:block"></div>
+
         <div className="relative">
           <button 
             className="relative p-2 text-slate-400 hover:text-slate-600 transition-colors rounded-full hover:bg-slate-50"
@@ -106,6 +160,19 @@ export function Header({ title }) {
           )}
         </div>
       </div>
+
+      <JoinMeetingModal 
+        isOpen={showJoinModal} 
+        onClose={() => setShowJoinModal(false)} 
+      />
+      <NewMeetingModal 
+        isOpen={showNewMeetingModal} 
+        onClose={() => setShowNewMeetingModal(false)} 
+        onSave={(data) => {
+          console.log('Saved Event:', data);
+          setShowNewMeetingModal(false);
+        }}
+      />
     </header>
   );
 }
