@@ -7,10 +7,10 @@ export const AVAILABLE_WIDGETS = [
   { id: 'recentActivity', name: 'Recent Activity', colSpan: 'col-span-1 lg:col-span-1' },
   { id: 'upcomingMeetings', name: 'Upcoming Meetings', colSpan: 'col-span-1 lg:col-span-1' },
   { id: 'schedulerCalendar', name: 'Scheduler Calendar', colSpan: 'col-span-1 lg:col-span-2' },
-  { id: 'whiteboards', name: 'Recent Whiteboards', colSpan: 'col-span-1 lg:col-span-1' },
   { id: 'billingHistory', name: 'Billing History', colSpan: 'col-span-1 lg:col-span-2' },
   { id: 'teamOverview', name: 'Team Overview', colSpan: 'col-span-1 lg:col-span-1' },
-  { id: 'notificationLogs', name: 'Notification Logs', colSpan: 'col-span-1 lg:col-span-1' }
+  { id: 'notificationLogs', name: 'Notification Logs', colSpan: 'col-span-1 lg:col-span-1' },
+  { id: 'libraryWidget', name: 'Library', colSpan: 'col-span-1 lg:col-span-1' }
 ];
 
 export function CustomizeDashboardModal({ isOpen, onClose, onSave, currentConfig }) {

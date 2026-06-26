@@ -5,7 +5,7 @@ export const users = [
     role: 'Admin',
     avatar: 'https://i.pravatar.cc/150?u=1',
     email: 'alex.j@meetly.mock',
-    plan: 'Workplace Basic'
+    plan: 'Plus'
   },
   {
     id: '2',

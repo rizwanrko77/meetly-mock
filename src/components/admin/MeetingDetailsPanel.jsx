@@ -121,6 +121,7 @@ function ScheduledView({ meeting }) {
 
 function CompletedView({ meeting }) {
   const [selectedSession, setSelectedSession] = useState(null);
+  const [activeTab, setActiveTab] = useState('participants');
 
   const hasMultipleSessions = meeting.sessions && meeting.sessions.length > 1;
 
@@ -158,6 +159,13 @@ function CompletedView({ meeting }) {
   }
 
   const targetSession = selectedSession || (meeting.sessions && meeting.sessions[0]) || meeting;
+
+  const availableTabs = [
+    { id: 'participants', label: `Participants (${meeting.participantsCount || 0})`, icon: Users, condition: true },
+    { id: 'summary', label: 'AI Summary', icon: Sparkles, condition: !!meeting.summary },
+    { id: 'transcript', label: 'Transcript', icon: FileText, condition: !!meeting.transcription },
+    { id: 'recording', label: 'Recording', icon: Video, condition: !!meeting.recording }
+  ].filter(t => t.condition);
 
   return (
     <div className="space-y-6">
@@ -197,39 +205,6 @@ function CompletedView({ meeting }) {
         </div>
       </div>
 
-      <details className="bg-slate-50 rounded-lg border border-slate-100 group cursor-pointer">
-        <summary className="p-4 text-sm font-medium text-slate-800 list-none flex justify-between items-center outline-none">
-          <div className="flex items-center gap-2"><Users size={16} className="text-slate-500" /> Participants ({meeting.participantsCount})</div>
-          <span className="text-xs text-primary group-open:hidden">View</span>
-          <span className="text-xs text-primary hidden group-open:block">Hide</span>
-        </summary>
-        <div className="p-4 pt-0 border-t border-slate-100 mt-2">
-          <div className="text-sm text-slate-600 mb-3 font-medium">Host: <span className="text-slate-800">{meeting.host}</span></div>
-          {meeting.participants && meeting.participants.length > 0 ? (
-            <div className="space-y-3">
-              {meeting.participants.map((p, idx) => (
-                <div key={idx} className="flex justify-between items-start bg-white p-2 rounded border border-slate-100">
-                  <div>
-                    <div className="text-sm font-medium text-slate-800">{p.name}</div>
-                    <div className="text-xs text-slate-500">{p.email}</div>
-                  </div>
-                  <div className="text-[10px] text-slate-400 font-medium bg-slate-50 px-1.5 py-0.5 rounded whitespace-nowrap">
-                    {p.joinTime} - {p.leaveTime}
-                  </div>
-                </div>
-              ))}
-              {meeting.participantsCount > meeting.participants.length && (
-                <div className="text-xs text-center text-slate-400 pt-2 border-t border-slate-100">
-                  +{meeting.participantsCount - meeting.participants.length} more participants
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className="text-sm text-slate-500 italic">Participant details are unavailable for this session.</div>
-          )}
-        </div>
-      </details>
-
       {meeting.isPaid && (
         <div className="bg-green-50 p-4 rounded-lg border border-green-100 flex justify-between items-center">
           <div className="font-medium text-green-800">Payment Collected</div>
@@ -237,43 +212,96 @@ function CompletedView({ meeting }) {
         </div>
       )}
 
-      {meeting.summary && (
-        <div className="bg-indigo-50 p-4 rounded-lg border border-indigo-100">
-          <div className="flex items-center gap-2 text-indigo-700 font-medium mb-2">
-            <Sparkles size={16} /> AI Summary
-          </div>
-          <div className="text-sm text-slate-700 leading-relaxed">
-            {meeting.summary}
-          </div>
-        </div>
-      )}
-
-      {meeting.transcription && (
-        <div className="bg-slate-50 p-4 rounded-lg border border-slate-100">
-          <div className="flex items-center gap-2 text-slate-700 font-medium mb-2">
-            <FileText size={16} /> Transcription
-          </div>
-          <div className="text-sm text-slate-600 leading-relaxed bg-white p-3 rounded border border-slate-200 h-32 overflow-y-auto">
-            {meeting.transcription}
-          </div>
-        </div>
-      )}
-
-      {meeting.recording && (
-        <div className="pt-4 border-t border-slate-200">
-          <div className="flex items-center gap-2 text-slate-700 font-medium mb-3">
-            <Video size={16} /> Meeting Recording
-          </div>
-          <div className="flex gap-3">
-            <button className="flex-1 py-2.5 bg-primary text-white rounded-lg font-medium shadow-sm hover:bg-indigo-700 transition-colors flex justify-center items-center gap-2">
-              <Play size={18} /> Play
+      {/* Tabs Navigation */}
+      <div className="border-b border-slate-200 mt-8">
+        <nav className="-mb-px flex gap-6 overflow-x-auto no-scrollbar" aria-label="Tabs">
+          {availableTabs.map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm flex items-center gap-2 transition-colors ${
+                activeTab === tab.id
+                  ? 'border-primary text-primary'
+                  : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
+              }`}
+            >
+              <tab.icon size={16} />
+              {tab.label}
             </button>
-            <button className="flex-1 py-2.5 bg-white border border-slate-200 text-slate-700 rounded-lg font-medium shadow-sm hover:bg-slate-50 transition-colors flex justify-center items-center gap-2">
-              <Download size={18} /> Download
-            </button>
+          ))}
+        </nav>
+      </div>
+
+      {/* Tab Content */}
+      <div className="pt-2">
+        {activeTab === 'participants' && (
+          <div className="bg-slate-50 p-4 rounded-lg border border-slate-100">
+            <div className="text-sm text-slate-600 mb-4 font-medium">Host: <span className="text-slate-800">{meeting.host}</span></div>
+            {meeting.participants && meeting.participants.length > 0 ? (
+              <div className="space-y-3">
+                {meeting.participants.map((p, idx) => (
+                  <div key={idx} className="flex justify-between items-start bg-white p-3 rounded-lg border border-slate-100 shadow-sm">
+                    <div>
+                      <div className="text-sm font-medium text-slate-800">{p.name}</div>
+                      <div className="text-xs text-slate-500">{p.email}</div>
+                    </div>
+                    <div className="text-xs text-slate-500 font-medium bg-slate-50 px-2 py-1 rounded">
+                      {p.joinTime} - {p.leaveTime}
+                    </div>
+                  </div>
+                ))}
+                {meeting.participantsCount > meeting.participants.length && (
+                  <div className="text-xs text-center text-slate-400 pt-3 border-t border-slate-100 mt-2">
+                    +{meeting.participantsCount - meeting.participants.length} more participants
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="text-sm text-slate-500 italic p-4 text-center bg-white rounded border border-slate-100">Participant details are unavailable for this session.</div>
+            )}
           </div>
-        </div>
-      )}
+        )}
+
+        {activeTab === 'summary' && meeting.summary && (
+          <div className="bg-indigo-50 p-5 rounded-lg border border-indigo-100">
+            <div className="flex items-center gap-2 text-indigo-700 font-bold mb-3">
+              <Sparkles size={18} /> AI Summary
+            </div>
+            <div className="text-sm text-slate-700 leading-relaxed bg-white p-4 rounded-lg shadow-sm border border-indigo-50">
+              {meeting.summary}
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'transcript' && meeting.transcription && (
+          <div className="bg-slate-50 p-5 rounded-lg border border-slate-100">
+            <div className="flex items-center gap-2 text-slate-700 font-bold mb-3">
+              <FileText size={18} /> Transcription
+            </div>
+            <div className="text-sm text-slate-600 leading-relaxed bg-white p-4 rounded-lg shadow-sm border border-slate-200 h-64 overflow-y-auto custom-scrollbar">
+              {meeting.transcription}
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'recording' && meeting.recording && (
+          <div className="bg-slate-50 p-5 rounded-lg border border-slate-100 text-center">
+            <div className="w-16 h-16 bg-slate-200 rounded-full flex items-center justify-center mx-auto mb-4">
+               <Video size={24} className="text-slate-500" />
+            </div>
+            <h4 className="font-bold text-slate-800 mb-1">Meeting Recording</h4>
+            <p className="text-sm text-slate-500 mb-6">Recording is available for playback or download.</p>
+            <div className="flex gap-3 justify-center max-w-sm mx-auto">
+              <button className="flex-1 py-2.5 bg-primary text-white rounded-lg font-medium shadow-sm hover:bg-indigo-700 transition-colors flex justify-center items-center gap-2">
+                <Play size={18} /> Play
+              </button>
+              <button className="flex-1 py-2.5 bg-white border border-slate-200 text-slate-700 rounded-lg font-medium shadow-sm hover:bg-slate-50 transition-colors flex justify-center items-center gap-2">
+                <Download size={18} /> Download
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

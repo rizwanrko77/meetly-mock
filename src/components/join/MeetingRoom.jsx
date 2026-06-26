@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { users } from '../../data/mockData';
+import { initialFiles } from '../admin/LibraryScreen';
 import { PollsPanel } from './PollsPanel';
 import { QAPanel } from './QAPanel';
 import { MeetingSettingsModal } from './MeetingSettingsModal';
-import { Whiteboard } from './Whiteboard';
 import { BreakoutRoomsModal } from './BreakoutRoomsModal';
 import { InviteModal } from './InviteModal';
+import { AnnotationOverlay } from '../shared/AnnotationOverlay';
 import { 
   Mic, MicOff, Video, VideoOff, MonitorUp, MessageSquare, Smile, 
   PhoneOff, Settings, Users, Hand, Subtitles, MoreVertical, 
   ChevronUp, CheckSquare, FileText, Download, LayoutDashboard,
-  HelpCircle, Edit3, CircleDot, Pin, Maximize, UserMinus, PanelRight, Link
+  HelpCircle, Edit3, CircleDot, Pin, Maximize, UserMinus, PanelRight, Link, Folder
 } from 'lucide-react';
 
 export function MeetingRoom({ onLeave }) {
@@ -31,8 +32,8 @@ export function MeetingRoom({ onLeave }) {
   // Tile states
   const [mutedParticipants, setMutedParticipants] = useState(new Set());
   const [pinnedUser, setPinnedUser] = useState(null);
-  const [isWhiteboardActive, setIsWhiteboardActive] = useState(false);
   const [isScreenSharing, setIsScreenSharing] = useState(false);
+  const [isWhiteboarding, setIsWhiteboarding] = useState(false);
   const [layoutMode, setLayoutMode] = useState('grid'); // 'grid' | 'speaker' | 'horizontal'
   const [waitingUser, setWaitingUser] = useState(null);
   const [isAnnotating, setIsAnnotating] = useState(false);
@@ -54,7 +55,7 @@ export function MeetingRoom({ onLeave }) {
   }, []);
 
   const getContainerLayoutClass = () => {
-    if (isWhiteboardActive || isScreenSharing || pinnedUser || layoutMode === 'speaker') {
+    if (isScreenSharing || isWhiteboarding || pinnedUser || layoutMode === 'speaker') {
       return 'flex flex-col lg:flex-row';
     }
     if (layoutMode === 'horizontal') {
@@ -184,11 +185,27 @@ export function MeetingRoom({ onLeave }) {
         return <QAPanel />;
       case 'files':
         return (
-          <div className="p-4 flex flex-col items-center justify-center h-full text-center">
-            <FileText size={48} className="text-slate-600 mb-4" />
-            <h3 className="text-white font-medium mb-2">Shared Files</h3>
-            <p className="text-slate-400 text-sm mb-4">Share documents and files with the room.</p>
-            <button className="bg-slate-800 text-white px-4 py-2 rounded-lg text-sm font-medium border border-slate-700 hover:bg-slate-700 transition-colors">Upload File</button>
+          <div className="p-4 flex flex-col h-full">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-white font-medium">Library</h3>
+            </div>
+            <div className="flex-1 space-y-3 overflow-y-auto no-scrollbar pr-1">
+              {initialFiles.map(file => (
+                <div 
+                  key={file.id} 
+                  className="bg-slate-800 border border-slate-700 hover:border-slate-500 hover:bg-slate-700/50 rounded-xl p-3 flex items-start gap-3 cursor-pointer transition-colors group"
+                  onClick={() => window.open(`/preview/${file.id}`, '_blank')}
+                >
+                  <div className="w-10 h-10 rounded-lg bg-slate-900 border border-slate-700 flex items-center justify-center shrink-0 group-hover:border-primary/50 transition-colors">
+                    <file.icon size={20} className={file.color} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="text-slate-200 text-sm font-medium truncate group-hover:text-white transition-colors">{file.name}</h4>
+                    <p className="text-slate-400 text-xs mt-0.5">{file.size} • {file.type.split('/').pop()}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         );
       case 'transcript':
@@ -259,14 +276,24 @@ export function MeetingRoom({ onLeave }) {
         
         {/* Video Area */}
         <div className={`flex-1 p-4 gap-4 relative overflow-hidden ${getContainerLayoutClass()}`}>
-          
-          {isWhiteboardActive && (
-            <div className="flex-1 rounded-2xl overflow-hidden shadow-lg border border-primary/50 relative min-h-[300px]">
-              <Whiteboard onClose={() => setIsWhiteboardActive(false)} />
+
+          {isWhiteboarding && (
+            <div className="flex-1 rounded-2xl overflow-hidden shadow-lg border border-slate-700 relative min-h-[300px] bg-white flex flex-col">
+              <div className="px-4 py-3 bg-slate-800 border-b border-slate-700 flex justify-between items-center z-20 shadow-md">
+                <span className="text-slate-200 text-sm font-medium flex items-center gap-2">
+                  <Edit3 size={16} className="text-primary" /> Collaborative Whiteboard
+                </span>
+                <button onClick={() => setIsWhiteboarding(false)} className="text-xs bg-red-500/20 text-red-500 hover:bg-red-500 hover:text-white px-3 py-1.5 rounded transition-colors font-medium">
+                  Close Whiteboard
+                </button>
+              </div>
+              <div className="flex-1 relative">
+                <AnnotationOverlay pageId="meeting-whiteboard" />
+              </div>
             </div>
           )}
 
-          {isScreenSharing && !isWhiteboardActive && (
+          {isScreenSharing && !isWhiteboarding && (
             <div className="flex-1 rounded-2xl overflow-hidden shadow-lg border border-slate-700 relative min-h-[300px] bg-slate-900 flex flex-col">
               <div className="px-4 py-3 bg-slate-800/80 border-b border-slate-700 flex justify-between items-center backdrop-blur-md absolute top-0 left-0 right-0 z-20">
                 <span className="text-slate-200 text-sm font-medium flex items-center gap-2">
@@ -304,7 +331,7 @@ export function MeetingRoom({ onLeave }) {
                 layoutClasses = 'flex-1 border-primary ring-1 ring-primary/50';
               } else if (isThumbHorizontal) {
                 layoutClasses = 'w-48 h-full shrink-0 border-white/5';
-              } else if (isWhiteboardActive || isScreenSharing || pinnedUser || layoutMode === 'speaker') {
+              } else if (isScreenSharing || isWhiteboarding || pinnedUser || layoutMode === 'speaker') {
                 layoutClasses = 'w-full lg:w-64 h-48 lg:h-40 shrink-0 border-white/5';
               }
 
@@ -358,7 +385,7 @@ export function MeetingRoom({ onLeave }) {
               );
             };
 
-            if (isWhiteboardActive || isScreenSharing) {
+            if (isScreenSharing || isWhiteboarding) {
               return (
                 <div className="flex flex-row lg:flex-col gap-4 overflow-x-auto lg:overflow-y-auto no-scrollbar shrink-0 w-full lg:w-64 h-32 lg:h-auto">
                   {users.map(u => renderTile(u, users.indexOf(u), false))}
@@ -494,6 +521,11 @@ export function MeetingRoom({ onLeave }) {
           )}
         </div>
 
+        {/* Library */}
+        <button onClick={() => toggleSidebar('files')} className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${activeSidebar === 'files' ? 'bg-primary text-white shadow-lg shadow-primary/30' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'}`} title="Library">
+          <Folder size={20} />
+        </button>
+
 
 
         {/* Right Controls */}
@@ -509,40 +541,30 @@ export function MeetingRoom({ onLeave }) {
           </button>
         </div>
 
+        {/* Recording */}
+        <button onClick={() => setIsRecording(!isRecording)} className={`hidden md:flex w-12 h-12 rounded-full items-center justify-center transition-colors ${isRecording ? 'bg-red-500 text-white shadow-lg shadow-red-500/30' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'}`} title={isRecording ? "Stop Recording" : "Start Recording"}>
+          <CircleDot size={20} className={isRecording ? 'fill-current animate-pulse' : ''} />
+        </button>
+
+        {/* Captions */}
+        <button onClick={() => setCcEnabled(!ccEnabled)} className={`hidden md:flex w-12 h-12 rounded-full items-center justify-center transition-colors ${ccEnabled ? 'bg-primary text-white shadow-lg shadow-primary/30' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'}`} title="Toggle Captions">
+          <Subtitles size={20} />
+        </button>
+
         {/* Whiteboard */}
-        <button onClick={() => setIsWhiteboardActive(!isWhiteboardActive)} className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${isWhiteboardActive ? 'bg-primary text-white shadow-lg shadow-primary/30' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'}`} title="Whiteboard">
+        <button onClick={() => { setIsWhiteboarding(!isWhiteboarding); setIsScreenSharing(false); }} className={`hidden md:flex w-12 h-12 rounded-full items-center justify-center transition-colors ${isWhiteboarding ? 'bg-primary text-white shadow-lg shadow-primary/30' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'}`} title="Whiteboard">
           <Edit3 size={20} />
         </button>
 
-        {/* More Menu */}
-        <div className="relative">
-          <button onClick={() => setMoreMenuOpen(!moreMenuOpen)} className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${moreMenuOpen ? 'bg-slate-700 text-white' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'}`} title="More Options">
-            <MoreVertical size={20} />
-          </button>
-          {moreMenuOpen && (
-            <div className="absolute bottom-full right-0 mb-4 w-56 bg-slate-800/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl py-2 z-50 animate-fade-in text-sm overflow-hidden">
-              <button onClick={() => setIsRecording(!isRecording)} className="w-full text-left px-4 py-2.5 text-slate-200 hover:bg-slate-700 hover:text-white flex items-center gap-3 transition-colors">
-                <CircleDot size={16} className={isRecording ? 'text-red-500 fill-current animate-pulse' : ''}/> {isRecording ? 'Stop Recording' : 'Start Recording'}
-              </button>
-              <button onClick={() => setCcEnabled(!ccEnabled)} className="w-full text-left px-4 py-2.5 text-slate-200 hover:bg-slate-700 hover:text-white flex items-center justify-between transition-colors">
-                <div className="flex items-center gap-3"><Subtitles size={16} className={ccEnabled ? 'text-primary' : ''}/> Captions</div>
-                {ccEnabled && <div className="w-1.5 h-1.5 rounded-full bg-primary"></div>}
-              </button>
-              <div className="h-px bg-white/10 my-1"></div>
-              <button onClick={() => { setIsAnnotating(!isAnnotating); setMoreMenuOpen(false); }} className="w-full text-left px-4 py-2.5 text-slate-200 hover:bg-slate-700 hover:text-white flex items-center justify-between transition-colors">
-                <div className="flex items-center gap-3"><CheckSquare size={16} className={isAnnotating ? 'text-primary' : ''}/> Annotate</div>
-                {isAnnotating && <div className="w-1.5 h-1.5 rounded-full bg-primary"></div>}
-              </button>
-              <button onClick={() => { 
-                setLayoutMode(prev => prev === 'grid' ? 'speaker' : prev === 'speaker' ? 'horizontal' : 'grid'); 
-                setMoreMenuOpen(false); 
-              }} className="w-full text-left px-4 py-2.5 text-slate-200 hover:bg-slate-700 hover:text-white flex items-center justify-between transition-colors">
-                <div className="flex items-center gap-3"><LayoutDashboard size={16} className="text-primary" /> Change Layout</div>
-                <span className="text-xs bg-slate-700 text-slate-300 px-2 py-0.5 rounded-full capitalize">{layoutMode}</span>
-              </button>
-            </div>
-          )}
-        </div>
+        {/* Annotate */}
+        <button onClick={() => setIsAnnotating(!isAnnotating)} className={`hidden lg:flex w-12 h-12 rounded-full items-center justify-center transition-colors ${isAnnotating ? 'bg-primary text-white shadow-lg shadow-primary/30' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'}`} title="Annotate">
+          <CheckSquare size={20} />
+        </button>
+
+        {/* Change Layout */}
+        <button onClick={() => setLayoutMode(prev => prev === 'grid' ? 'speaker' : prev === 'speaker' ? 'horizontal' : 'grid')} className="hidden lg:flex w-12 h-12 rounded-full items-center justify-center transition-colors bg-slate-800 hover:bg-slate-700 text-slate-300" title={`Change Layout (Current: ${layoutMode})`}>
+          <LayoutDashboard size={20} />
+        </button>
 
         <div className="w-px h-8 bg-white/10 mx-1"></div>
         
@@ -552,7 +574,7 @@ export function MeetingRoom({ onLeave }) {
         </button>
       </div>
 
-      {isSettingsModalOpen && <MeetingSettingsModal onClose={() => setIsSettingsModalOpen(false)} initialTab={settingsModalTab} />}
+      {isSettingsModalOpen && <MeetingSettingsModal isOpen={true} onClose={() => setIsSettingsModalOpen(false)} initialTab={settingsModalTab} />}
       {isInviteModalOpen && <InviteModal onClose={() => setIsInviteModalOpen(false)} />}
       
       {/* Global CSS for hiding scrollbars but keeping functionality */}

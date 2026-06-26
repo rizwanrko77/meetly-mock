@@ -8,10 +8,10 @@ import {
   RecentActivityWidget, 
   UpcomingMeetingsWidget, 
   SchedulerCalendarWidget, 
-  WhiteboardsWidget, 
   BillingHistoryWidget, 
   TeamOverviewWidget, 
-  NotificationLogsWidget 
+  NotificationLogsWidget,
+  LibraryWidget
 } from './widgets';
 
 const WIDGET_COMPONENTS = {
@@ -19,10 +19,10 @@ const WIDGET_COMPONENTS = {
   recentActivity: RecentActivityWidget,
   upcomingMeetings: UpcomingMeetingsWidget,
   schedulerCalendar: SchedulerCalendarWidget,
-  whiteboards: WhiteboardsWidget,
   billingHistory: BillingHistoryWidget,
   teamOverview: TeamOverviewWidget,
   notificationLogs: NotificationLogsWidget,
+  libraryWidget: LibraryWidget,
 };
 
 export function DashboardHome() {
@@ -31,7 +31,7 @@ export function DashboardHome() {
   
   // Default configuration
   const [dashboardConfig, setDashboardConfig] = useState(
-    ['accountOverview', 'recentActivity', 'schedulerCalendar', 'upcomingMeetings', 'whiteboards', 'billingHistory', 'teamOverview', 'notificationLogs']
+    ['accountOverview', 'recentActivity', 'schedulerCalendar', 'upcomingMeetings', 'billingHistory', 'teamOverview', 'notificationLogs', 'libraryWidget']
   );
 
   useEffect(() => {

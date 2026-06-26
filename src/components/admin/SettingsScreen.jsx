@@ -7,6 +7,7 @@ import {
   CalendarDays, Hash, Layout, MessageCircle, X
 } from 'lucide-react';
 import { ToggleSwitch } from '../shared/ToggleSwitch';
+import { InfoTooltip } from '../shared/InfoTooltip';
 import { DnsVerificationModal } from './DnsVerificationModal';
 import { InviteMemberModal } from './InviteMemberModal';
 
@@ -430,7 +431,10 @@ export function SettingsScreen() {
         {activeTab === 'Team' && (
           <div className="p-6 space-y-8">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2"><Users className="text-purple-500" /> Team Management</h3>
+              <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
+                <Users className="text-purple-500" /> Team Management
+                <InfoTooltip content="Advanced team roles and permissions are out of scope for the MVP." />
+              </h3>
               <button onClick={() => setInviteModalOpen(true)} className="px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors shadow-sm flex items-center gap-2">
                 <UserPlus size={16} /> Invite Member
               </button>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Settings, Mic, Video, Monitor, X, Check } from 'lucide-react';
+import { Settings, Mic, Video, Monitor, X, Check, MessageSquare, CheckSquare, HelpCircle } from 'lucide-react';
 
 export function MeetingSettingsModal({ isOpen, onClose, initialTab = 'audio' }) {
   const [activeTab, setActiveTab] = useState(initialTab);
@@ -42,6 +42,25 @@ export function MeetingSettingsModal({ isOpen, onClose, initialTab = 'audio' }) 
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-colors ${activeTab === 'general' ? 'bg-primary/20 text-primary' : 'text-slate-300 hover:bg-slate-800 hover:text-white'}`}
             >
               <Monitor size={18} /> General
+            </button>
+            <div className="h-px bg-slate-800 my-2 mx-4"></div>
+            <button 
+              onClick={() => setActiveTab('chat')}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-colors ${activeTab === 'chat' ? 'bg-primary/20 text-primary' : 'text-slate-300 hover:bg-slate-800 hover:text-white'}`}
+            >
+              <MessageSquare size={18} /> Chat
+            </button>
+            <button 
+              onClick={() => setActiveTab('polls')}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-colors ${activeTab === 'polls' ? 'bg-primary/20 text-primary' : 'text-slate-300 hover:bg-slate-800 hover:text-white'}`}
+            >
+              <CheckSquare size={18} /> Polls
+            </button>
+            <button 
+              onClick={() => setActiveTab('qa')}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-colors ${activeTab === 'qa' ? 'bg-primary/20 text-primary' : 'text-slate-300 hover:bg-slate-800 hover:text-white'}`}
+            >
+              <HelpCircle size={18} /> Q&A
             </button>
           </div>
 
@@ -156,6 +175,62 @@ export function MeetingSettingsModal({ isOpen, onClose, initialTab = 'audio' }) 
                   <label className="flex items-center gap-3 cursor-pointer">
                     <input type="checkbox" className="w-5 h-5 rounded border-slate-600 bg-slate-800 text-primary focus:ring-primary focus:ring-offset-slate-900" />
                     <span className="text-slate-300">Show meeting duration</span>
+                  </label>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'chat' && (
+              <div className="space-y-6 animate-fade-in">
+                <h3 className="text-white font-medium text-lg">Chat Settings</h3>
+                <div className="space-y-4">
+                  <label className="flex items-center gap-3 cursor-pointer">
+                    <input type="checkbox" defaultChecked className="w-5 h-5 rounded border-slate-600 bg-slate-800 text-primary focus:ring-primary focus:ring-offset-slate-900" />
+                    <span className="text-slate-300">Allow participants to chat with everyone</span>
+                  </label>
+                  <label className="flex items-center gap-3 cursor-pointer">
+                    <input type="checkbox" defaultChecked className="w-5 h-5 rounded border-slate-600 bg-slate-800 text-primary focus:ring-primary focus:ring-offset-slate-900" />
+                    <span className="text-slate-300">Allow private messages between participants</span>
+                  </label>
+                  <label className="flex items-center gap-3 cursor-pointer">
+                    <input type="checkbox" defaultChecked className="w-5 h-5 rounded border-slate-600 bg-slate-800 text-primary focus:ring-primary focus:ring-offset-slate-900" />
+                    <span className="text-slate-300">Auto-save chat on meeting end</span>
+                  </label>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'polls' && (
+              <div className="space-y-6 animate-fade-in">
+                <h3 className="text-white font-medium text-lg">Polls Settings</h3>
+                <div className="space-y-4">
+                  <label className="flex items-center gap-3 cursor-pointer">
+                    <input type="checkbox" defaultChecked className="w-5 h-5 rounded border-slate-600 bg-slate-800 text-primary focus:ring-primary focus:ring-offset-slate-900" />
+                    <span className="text-slate-300">Allow anonymous responses</span>
+                  </label>
+                  <label className="flex items-center gap-3 cursor-pointer">
+                    <input type="checkbox" className="w-5 h-5 rounded border-slate-600 bg-slate-800 text-primary focus:ring-primary focus:ring-offset-slate-900" />
+                    <span className="text-slate-300">Share poll results automatically with attendees</span>
+                  </label>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'qa' && (
+              <div className="space-y-6 animate-fade-in">
+                <h3 className="text-white font-medium text-lg">Q&A Settings</h3>
+                <div className="space-y-4">
+                  <label className="flex items-center gap-3 cursor-pointer">
+                    <input type="checkbox" defaultChecked className="w-5 h-5 rounded border-slate-600 bg-slate-800 text-primary focus:ring-primary focus:ring-offset-slate-900" />
+                    <span className="text-slate-300">Allow anonymous questions</span>
+                  </label>
+                  <label className="flex items-center gap-3 cursor-pointer">
+                    <input type="checkbox" defaultChecked className="w-5 h-5 rounded border-slate-600 bg-slate-800 text-primary focus:ring-primary focus:ring-offset-slate-900" />
+                    <span className="text-slate-300">Allow attendees to upvote questions</span>
+                  </label>
+                  <label className="flex items-center gap-3 cursor-pointer">
+                    <input type="checkbox" className="w-5 h-5 rounded border-slate-600 bg-slate-800 text-primary focus:ring-primary focus:ring-offset-slate-900" />
+                    <span className="text-slate-300">Require host approval before questions appear</span>
                   </label>
                 </div>
               </div>

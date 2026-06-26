@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { currentUser, payments } from '../../data/mockData';
 import { CreditCard, Download, CheckCircle2 } from 'lucide-react';
 import { DataTable } from '../shared/DataTable';
+import { UpgradePlanModal } from './modals/UpgradePlanModal';
 
 export function AccountScreen() {
+  const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
+
   const paymentColumns = [
     { key: 'date', label: 'Date', render: (row) => new Date(row.date).toLocaleDateString() },
     { key: 'eventName', label: 'Description', className: 'font-medium text-slate-800' },
@@ -65,12 +68,15 @@ export function AccountScreen() {
             </div>
             <div className="flex items-center justify-between text-sm border-t border-slate-100 pt-4">
               <span className="text-slate-500">Monthly cost</span>
-              <span className="font-medium text-slate-800">$15.00 / user</span>
+              <span className="font-medium text-slate-800">$10.00 / month</span>
             </div>
           </div>
           
           <div className="flex gap-3">
-            <button className="flex-1 px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors shadow-sm">
+            <button 
+              onClick={() => setIsUpgradeModalOpen(true)}
+              className="flex-1 px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
+            >
               Upgrade Plan
             </button>
             <button className="px-4 py-2 bg-white border border-red-200 text-red-600 text-sm font-medium rounded-lg hover:bg-red-50 transition-colors">
@@ -86,6 +92,11 @@ export function AccountScreen() {
         </h3>
         <DataTable columns={paymentColumns} data={payments} />
       </div>
+
+      <UpgradePlanModal 
+        isOpen={isUpgradeModalOpen} 
+        onClose={() => setIsUpgradeModalOpen(false)} 
+      />
     </div>
   );
 }
