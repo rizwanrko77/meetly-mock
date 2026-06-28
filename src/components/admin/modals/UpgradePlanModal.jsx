@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, CheckCircle, CreditCard, Building, Globe, DollarSign, Users, Calendar, ArrowLeft, User, Lock } from 'lucide-react';
+import { X, CheckCircle, CreditCard, Building, Globe, DollarSign, Users, Calendar, ArrowLeft, User, Lock, Sparkles, Video } from 'lucide-react';
 import { InfoTooltip } from '../../shared/InfoTooltip';
 
 export function UpgradePlanModal({ isOpen, onClose }) {
@@ -37,6 +37,8 @@ export function UpgradePlanModal({ isOpen, onClose }) {
         { text: 'Public scheduler (up to 500 bookings/mo)', icon: Globe },
         { text: 'Custom domain integration', icon: Globe, tooltip: 'Host your meeting links on your own custom domain.' },
         { text: 'Monetization', icon: DollarSign, tooltip: 'Charge attendees for meetings or webinars.' },
+        { text: 'AI Summary (10 hrs/mo)', icon: Sparkles, tooltip: 'Automatic AI-generated meeting summaries, up to 10 hours per month.' },
+        { text: 'Recordings (1 GB storage)', icon: Video, tooltip: 'Record and store meetings with up to 1 GB of cloud storage.' },
       ],
       buttonText: 'Upgrade Now',
       action: 'checkout',
@@ -55,6 +57,8 @@ export function UpgradePlanModal({ isOpen, onClose }) {
         { text: 'Public scheduler (unlimited bookings/mo)', icon: Globe },
         { text: 'Custom domain integration', icon: Globe },
         { text: 'Monetization', icon: DollarSign },
+        { text: 'AI Summary (Unlimited)', icon: Sparkles },
+        { text: 'Recordings (Unlimited storage)', icon: Video },
       ],
       buttonText: 'Upgrade Now',
       action: 'checkout'

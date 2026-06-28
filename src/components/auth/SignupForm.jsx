@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Lock, User, ArrowLeft, Key, CheckCircle, CreditCard, Building, Globe, DollarSign, Users, Calendar } from 'lucide-react';
+import { Mail, Lock, User, ArrowLeft, Key, CheckCircle, CreditCard, Building, Globe, DollarSign, Users, Calendar, Sparkles, Video } from 'lucide-react';
 import { InfoTooltip } from '../shared/InfoTooltip';
 
 export function SignupForm({ onSwitch, onSuccess }) {
@@ -39,6 +39,8 @@ export function SignupForm({ onSwitch, onSuccess }) {
         { text: 'Public scheduler (up to 500 bookings/mo)', icon: Globe },
         { text: 'Custom domain integration', icon: Globe, tooltip: 'Host your meeting links on your own custom domain.' },
         { text: 'Monetization', icon: DollarSign, tooltip: 'Charge attendees for meetings or webinars.' },
+        { text: 'AI Summary (10 hrs/mo)', icon: Sparkles, tooltip: 'Automatic AI-generated meeting summaries, up to 10 hours per month.' },
+        { text: 'Recordings (1 GB storage)', icon: Video, tooltip: 'Record and store meetings with up to 1 GB of cloud storage.' },
       ],
       buttonText: 'Subscribe Now',
       action: 'checkout',
@@ -57,6 +59,8 @@ export function SignupForm({ onSwitch, onSuccess }) {
         { text: 'Public scheduler (unlimited bookings/mo)', icon: Globe },
         { text: 'Custom domain integration', icon: Globe },
         { text: 'Monetization', icon: DollarSign },
+        { text: 'AI Summary (Unlimited)', icon: Sparkles },
+        { text: 'Recordings (Unlimited storage)', icon: Video },
       ],
       buttonText: 'Subscribe Now',
       action: 'checkout'
